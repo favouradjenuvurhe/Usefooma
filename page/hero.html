@@ -13,18 +13,18 @@
     Design faster with instant website mockups built around real device frames, responsive previews, and real-time URL rendering.
   </p>
 
-  <!-- INPUT + SELECT (FIXED LAYOUT) -->
+  <!-- INPUT + SELECT (REDUCED WIDTH INPUT ~15%) -->
   <div class="mt-10 max-w-3xl mx-auto flex items-center gap-2">
 
-    <!-- URL INPUT (SHORTER + CLEAN) -->
+    <!-- URL INPUT (SHORTER WIDTH FEEL) -->
     <input
       v-model="url"
       type="text"
       placeholder="https://example.com"
-      class="flex-1 px-4 py-2.5 border border-gray-200 rounded-xl text-sm outline-none focus:ring-2 focus:ring-purple-500"
+      class="flex-[0.85] px-4 py-2.5 border border-gray-200 rounded-xl text-sm outline-none focus:ring-2 focus:ring-purple-500"
     />
 
-    <!-- DEVICE SELECT (NOT BOXY ANYMORE) -->
+    <!-- DEVICE SELECT -->
     <select
       v-model="device"
       class="w-36 px-3 py-2.5 border border-gray-200 rounded-xl text-sm text-gray-700 bg-white"
@@ -46,7 +46,7 @@
     </button>
   </div>
 
-  <!-- IMAGE ONLY OUTPUT (NO LIVE PREVIEW) -->
+  <!-- IMAGE ONLY OUTPUT (PURE VISUAL RESULT) -->
   <div class="mt-14 max-w-4xl mx-auto">
 
     <!-- EMPTY STATE -->
@@ -56,7 +56,6 @@
 
     <!-- IMAGE RESULT -->
     <div v-if="imageSrc">
-      <p class="text-sm text-gray-500 mb-3">Generated Mockup</p>
       <img
         :src="imageSrc"
         class="rounded-2xl border shadow-md w-full"
