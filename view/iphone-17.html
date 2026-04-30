@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>iPhone 17 Preview</title>
+<script src="https://cdn.tailwindcss.com"></script>
+
+<style>
+body{
+  background:#020617;
+}
+.phone{
+  width:390px;
+  height:820px;
+  background:#111;
+  border:10px solid #000;
+  border-radius:46px;
+  padding:12px;
+  position:relative;
+  box-shadow:0 30px 70px rgba(0,0,0,.55);
+}
+.notch{
+  width:140px;
+  height:28px;
+  background:#000;
+  position:absolute;
+  top:0;
+  left:50%;
+  transform:translateX(-50%);
+  border-radius:0 0 18px 18px;
+  z-index:10;
+}
+.screen{
+  width:100%;
+  height:100%;
+  border-radius:34px;
+  overflow:hidden;
+  background:#fff;
+}
+.screen iframe{
+  width:100%;
+  height:100%;
+  border:none;
+}
+</style>
+</head>
+
+<body class="min-h-screen flex items-center justify-center p-6">
+
+<div>
+  <div class="phone">
+    <div class="notch"></div>
+    <div class="screen">
+      <iframe id="frame"></iframe>
+    </div>
+  </div>
+
+  <div class="text-center text-slate-400 mt-4">
+    iPhone 17
+  </div>
+</div>
+
+<script>
+const params = new URLSearchParams(window.location.search);
+document.getElementById("frame").src =
+params.get("url") || "https://example.com";
+</script>
+
+</body>
+</html>
