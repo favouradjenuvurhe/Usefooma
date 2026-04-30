@@ -15,7 +15,7 @@ padding:0;
 width:100%;
 height:100%;
 overflow:hidden;
-background:#ffffff;
+background:#fff;
 font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display",sans-serif;
 touch-action:none;
 }
@@ -25,7 +25,7 @@ width:100%;
 height:100vh;
 position:relative;
 overflow:hidden;
-background:#ffffff;
+background:#fff;
 }
 
 .device-wrap{
@@ -39,6 +39,7 @@ transform-origin:center center;
 }
 .device-wrap:active{cursor:grabbing;}
 
+/* shadow */
 .shadow-air{
 position:absolute;
 left:50%;
@@ -52,19 +53,19 @@ transform:translate(-50%,-50%);
 z-index:0;
 }
 
-/* PHONE */
+/* AIR BODY */
 .phone{
 position:relative;
 width:315px;
 height:682px;
 border-radius:44px;
-background:linear-gradient(145deg,#fafafa,#d8d8d8);
+background:linear-gradient(145deg,#fafafa,#d7d7d7);
 border:1.5px solid #111;
 overflow:hidden;
 box-shadow:
 0 24px 50px rgba(0,0,0,.16),
-inset 2px 0 rgba(255,255,255,.7),
-inset -2px 0 rgba(0,0,0,.12);
+inset 2px 0 rgba(255,255,255,.75),
+inset -2px 0 rgba(0,0,0,.10);
 z-index:2;
 }
 
@@ -75,12 +76,12 @@ inset:0;
 border-radius:44px;
 box-shadow:
 inset 1px 1px rgba(255,255,255,.8),
-inset -1px -1px rgba(0,0,0,.14);
+inset -1px -1px rgba(0,0,0,.12);
 pointer-events:none;
-z-index:30;
+z-index:40;
 }
 
-/* SCREEN */
+/* screen exact fit */
 .screen{
 position:absolute;
 top:5px;
@@ -90,26 +91,23 @@ bottom:5px;
 border-radius:39px;
 overflow:hidden;
 background:#fff;
+display:flex;
+flex-direction:column;
 }
 
-.screen iframe{
-position:absolute;
-inset:0;
-width:100%;
-height:100%;
-border:none;
-display:block;
+/* top native area */
+.top-ui{
+height:54px;
+min-height:54px;
+position:relative;
 background:#fff;
-z-index:1;
+z-index:20;
+flex-shrink:0;
 }
 
-/* STATUS BAR */
+/* status bar ABOVE iframe */
 .status-bar{
-position:absolute;
-top:0;
-left:0;
-right:0;
-height:42px;
+height:26px;
 padding:0 14px;
 display:flex;
 align-items:center;
@@ -117,12 +115,6 @@ justify-content:space-between;
 font-size:13px;
 font-weight:600;
 color:#000;
-z-index:50;
-pointer-events:none;
-}
-
-.status-left{
-min-width:54px;
 }
 
 .status-right{
@@ -131,7 +123,6 @@ align-items:center;
 gap:6px;
 }
 
-/* signal */
 .signal{
 display:flex;
 align-items:flex-end;
@@ -142,59 +133,69 @@ height:12px;
 width:3px;
 background:#000;
 border-radius:2px;
-display:block;
 }
 .signal span:nth-child(1){height:4px;}
 .signal span:nth-child(2){height:6px;}
 .signal span:nth-child(3){height:8px;}
 .signal span:nth-child(4){height:10px;}
 
-/* wifi */
 .wifi{
 font-size:12px;
 line-height:1;
 }
 
-/* battery */
 .battery{
 width:24px;
 height:12px;
-border:1.8px solid #000;
+border:1.7px solid #000;
 border-radius:4px;
 position:relative;
 }
 .battery:before{
 content:"";
 position:absolute;
-top:2px;
 right:-4px;
+top:3px;
 width:2px;
-height:6px;
+height:5px;
 background:#000;
 border-radius:0 2px 2px 0;
 }
 .battery-level{
 position:absolute;
-top:1px;
 left:1px;
-height:8px;
+top:1px;
 width:16px;
+height:8px;
 background:#000;
 border-radius:2px;
 }
 
-/* dynamic island */
+/* island under status bar */
 .island{
 position:absolute;
-top:10px;
 left:50%;
+top:22px;
 transform:translateX(-50%);
 width:88px;
 height:25px;
 background:#000;
 border-radius:999px;
-z-index:60;
-pointer-events:none;
+}
+
+/* iframe area only below top-ui */
+.webview{
+flex:1;
+min-height:0;
+background:#fff;
+}
+
+.webview iframe{
+width:100%;
+height:100%;
+border:none;
+display:block;
+background:#fff;
 }
 
 /* buttons */
@@ -232,7 +233,6 @@ z-index:30;
 }
 .gl{left:74px;}
 .gr{right:74px;}
-
 .grill span{
 width:3px;
 height:3px;
@@ -253,7 +253,7 @@ background:#111;
 border:2px solid #fff;
 box-shadow:0 0 10px rgba(0,0,0,.2);
 cursor:nwse-resize;
-z-index:80;
+z-index:90;
 }
 
 /* mobile */
@@ -264,21 +264,22 @@ height:552px;
 border-radius:38px;
 }
 .screen{
-top:4px;
-left:4px;
-right:4px;
-bottom:4px;
+top:4px;left:4px;right:4px;bottom:4px;
 border-radius:34px;
 }
+.top-ui{
+height:48px;
+min-height:48px;
+}
 .status-bar{
-height:38px;
-font-size:11px;
+height:24px;
 padding:0 10px;
+font-size:11px;
 }
 .island{
 width:74px;
 height:22px;
-top:9px;
+top:19px;
 }
 .shadow-air{
 width:250px;
@@ -322,8 +323,9 @@ height:20px;
 
 <div class="screen">
 
+<div class="top-ui">
 <div class="status-bar">
-<div class="status-left" id="timeText">9:41</div>
+<div id="timeText">9:41</div>
 
 <div class="status-right">
 <div class="signal">
@@ -335,8 +337,11 @@ height:20px;
 </div>
 
 <div class="island"></div>
+</div>
 
+<div class="webview">
 <iframe id="frame"></iframe>
+</div>
 
 </div>
 
@@ -364,7 +369,7 @@ setInterval(updateTime,1000);
 function updateTime(){
 const now = new Date();
 let h = now.getHours();
-let m = now.getMinutes().toString().padStart(2,'0');
+let m = String(now.getMinutes()).padStart(2,"0");
 h = h % 12 || 12;
 document.getElementById("timeText").textContent = h + ":" + m;
 }
@@ -374,8 +379,8 @@ const {createApp}=Vue;
 createApp({
 data(){
 return{
-x:window.innerWidth/2,
-y:window.innerHeight/2,
+x:innerWidth/2,
+y:innerHeight/2,
 scale:1,
 dragging:false,
 zooming:false,
@@ -388,8 +393,8 @@ startScale:1
 computed:{
 wrapperStyle(){
 return{
-left:this.x+'px',
-top:this.y+'px',
+left:this.x+"px",
+top:this.y+"px",
 transform:`translate(-50%,-50%) scale(${this.scale})`
 }
 },
@@ -451,7 +456,7 @@ this.dragging=false;
 this.zooming=false;
 }
 }
-}).mount('#app');
+}).mount("#app");
 </script>
 
 </body>
