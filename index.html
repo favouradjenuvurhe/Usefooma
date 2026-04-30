@@ -42,8 +42,29 @@ sections.forEach(section => {
     .then(res => res.text())
     .then(data => {
       document.getElementById(section.id).innerHTML = data;
+
+      // re-init icons after load
+      if (window.lucide) lucide.createIcons();
     });
 });
+
+// ✅ GLOBAL FUNCTION (NOW WORKS)
+function goPreview(){
+  let url = document.getElementById("url").value.trim();
+  let device = document.getElementById("device").value;
+
+  if(!url){
+    alert("Enter website URL");
+    return;
+  }
+
+  if(!url.startsWith("http://") && !url.startsWith("https://")){
+    url = "https://" + url;
+  }
+
+  window.location.href =
+    "view/" + device + ".html?url=" + encodeURIComponent(url);
+}
 </script>
 
 </body>
