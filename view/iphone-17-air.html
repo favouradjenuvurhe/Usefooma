@@ -28,7 +28,7 @@ overflow:hidden;
 background:#ffffff;
 }
 
-/* draggable area */
+/* move area */
 .device-wrap{
 position:absolute;
 left:50%;
@@ -38,65 +38,64 @@ user-select:none;
 touch-action:none;
 transform-origin:center center;
 }
-
-.device-wrap:active{
-cursor:grabbing;
-}
+.device-wrap:active{cursor:grabbing;}
 
 /* shadow */
 .shadow-air{
 position:absolute;
 left:50%;
 top:50%;
-width:340px;
-height:170px;
+width:300px;
+height:120px;
 border-radius:50%;
-background:rgba(0,0,0,.14);
-filter:blur(35px);
+background:rgba(0,0,0,.13);
+filter:blur(30px);
 transform:translate(-50%,-50%);
 z-index:0;
 }
 
-/* phone */
+/* REAL AIR BODY */
 .phone{
 position:relative;
-width:390px;
-height:820px;
-background:linear-gradient(145deg,#f8f8f8,#d8d8d8);
-border:2px solid #111;
-border-radius:46px;
-padding:12px;
+width:315px;
+height:682px;
+border-radius:44px;
+background:linear-gradient(145deg,#fafafa,#d8d8d8);
+border:1.5px solid #111;
+overflow:hidden;
 box-shadow:
-0 30px 60px rgba(0,0,0,.18),
-inset 1px 0 rgba(255,255,255,.8),
-inset -1px 0 rgba(0,0,0,.15);
+0 24px 50px rgba(0,0,0,.16),
+inset 2px 0 rgba(255,255,255,.7),
+inset -2px 0 rgba(0,0,0,.12);
 z-index:2;
 }
 
-/* inner gloss */
+/* metallic edge */
 .phone:before{
 content:"";
 position:absolute;
 inset:0;
-border-radius:46px;
+border-radius:44px;
 box-shadow:
-inset 2px 0 rgba(255,255,255,.6),
-inset -2px 0 rgba(0,0,0,.12);
+inset 1px 1px rgba(255,255,255,.8),
+inset -1px -1px rgba(0,0,0,.14);
 pointer-events:none;
-z-index:10;
+z-index:20;
 }
 
-/* screen FIXED */
+/* SCREEN (kept fixed) */
 .screen{
-position:relative;
-width:100%;
-height:100%;
-border-radius:34px;
+position:absolute;
+top:5px;
+left:5px;
+right:5px;
+bottom:5px;
+border-radius:39px;
 overflow:hidden;
 background:#fff;
 }
 
-/* iframe FIXED */
+/* iframe */
 .screen iframe{
 width:100%;
 height:100%;
@@ -105,41 +104,41 @@ display:block;
 background:#fff;
 }
 
-/* notch */
+/* dynamic island */
 .island{
 position:absolute;
-top:0;
+top:12px;
 left:50%;
 transform:translateX(-50%);
-width:140px;
-height:28px;
+width:88px;
+height:25px;
 background:#000;
-border-radius:0 0 18px 18px;
-z-index:20;
+border-radius:999px;
+z-index:40;
 pointer-events:none;
 }
 
-/* buttons */
+/* side buttons */
 .btn{
 position:absolute;
 left:-2px;
 width:3px;
-background:#999;
+background:#8f8f8f;
 border-radius:4px;
 z-index:30;
 }
-.b1{top:160px;height:40px;}
-.b2{top:230px;height:70px;}
-.b3{top:320px;height:70px;}
+.b1{top:145px;height:34px;}
+.b2{top:205px;height:58px;}
+.b3{top:278px;height:58px;}
 
-/* bottom */
+/* speaker grills */
 .port{
 position:absolute;
-bottom:10px;
+bottom:9px;
 left:50%;
 transform:translateX(-50%);
-width:34px;
-height:5px;
+width:32px;
+height:4px;
 background:#666;
 border-radius:999px;
 z-index:30;
@@ -147,13 +146,14 @@ z-index:30;
 
 .grill{
 position:absolute;
-bottom:10px;
+bottom:9px;
 display:flex;
 gap:4px;
 z-index:30;
 }
-.gl{left:88px;}
-.gr{right:88px;}
+.gl{left:74px;}
+.gr{right:74px;}
+
 .grill span{
 width:3px;
 height:3px;
@@ -161,10 +161,10 @@ background:#666;
 border-radius:50%;
 }
 
-/* zoom handle */
+/* zoom knob */
 .zoom-handle{
 position:absolute;
-right:-32px;
+right:-28px;
 top:50%;
 transform:translateY(-50%);
 width:22px;
@@ -172,7 +172,7 @@ height:22px;
 border-radius:50%;
 background:#111;
 border:2px solid #fff;
-box-shadow:0 0 12px rgba(0,0,0,.25);
+box-shadow:0 0 10px rgba(0,0,0,.2);
 cursor:nwse-resize;
 z-index:50;
 }
@@ -180,22 +180,28 @@ z-index:50;
 /* mobile */
 @media(max-width:768px){
 .phone{
-width:320px;
-height:680px;
-border-radius:40px;
-padding:10px;
+width:255px;
+height:552px;
+border-radius:38px;
 }
-.screen{border-radius:28px;}
+.screen{
+top:4px;
+left:4px;
+right:4px;
+bottom:4px;
+border-radius:34px;
+}
 .island{
-width:110px;
-height:24px;
+width:74px;
+height:22px;
+top:10px;
 }
 .shadow-air{
-width:280px;
-height:140px;
+width:250px;
+height:100px;
 }
 .zoom-handle{
-right:-26px;
+right:-24px;
 width:20px;
 height:20px;
 }
@@ -260,7 +266,7 @@ data(){
 return{
 x:window.innerWidth/2,
 y:window.innerHeight/2,
-scale:.78,
+scale:1,
 dragging:false,
 zooming:false,
 offsetX:0,
@@ -301,8 +307,8 @@ this.x=e.clientX-this.offsetX;
 this.y=e.clientY-this.offsetY;
 }
 if(this.zooming){
-let diff=(this.startY-e.clientY)/350;
-this.scale=Math.max(.45,Math.min(2.2,this.startScale+diff));
+let diff=(this.startY-e.clientY)/320;
+this.scale=Math.max(.55,Math.min(2.3,this.startScale+diff));
 }
 },
 touchStart(e){
@@ -325,10 +331,9 @@ if(this.dragging){
 this.x=t.clientX-this.offsetX;
 this.y=t.clientY-this.offsetY;
 }
-
 if(this.zooming){
-let diff=(this.startY-t.clientY)/350;
-this.scale=Math.max(.45,Math.min(2.2,this.startScale+diff));
+let diff=(this.startY-t.clientY)/320;
+this.scale=Math.max(.55,Math.min(2.3,this.startScale+diff));
 }
 },
 stopAction(){
