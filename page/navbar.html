@@ -1,1 +1,43 @@
+<!-- navbar.html -->
 
+<header class="flex items-center justify-between px-6 py-4 border-b border-gray-100 bg-white">
+
+  <!-- LOGO -->
+  <div class="text-2xl font-bold text-purple-500" style="font-family: cursive;">
+    foma
+  </div>
+
+  <!-- CENTER LINKS (optional if you want later) -->
+  <nav class="hidden md:flex items-center gap-6 text-sm text-gray-600">
+    <a href="#" class="hover:text-black">Features</a>
+    <a href="#" class="hover:text-black">Pricing</a>
+    <a href="#" class="hover:text-black">Docs</a>
+  </nav>
+
+  <!-- RIGHT ICONS + LINKS -->
+  <div class="flex items-center gap-5">
+
+    <!-- SOCIAL ICONS -->
+    <div class="flex items-center gap-4 text-gray-700">
+      <i data-lucide="instagram" class="w-5 h-5 hover:text-black cursor-pointer"></i>
+      <i data-lucide="pinterest" class="w-5 h-5 hover:text-black cursor-pointer"></i>
+      <i data-lucide="x" class="w-5 h-5 hover:text-black cursor-pointer"></i>
+    </div>
+
+    <!-- DIVIDER -->
+    <div class="w-px h-5 bg-gray-200"></div>
+
+    <!-- LINKS -->
+    <div class="flex items-center gap-5 text-sm text-gray-700">
+      <a href="#" class="hover:text-black">Support</a>
+      <a href="#" class="hover:text-black">Blog</a>
+    </div>
+
+  </div>
+
+</header>
+
+<script>
+  // ensure icons render when loaded via fetch
+  if (window.lucide) lucide.createIcons();
+</script>
