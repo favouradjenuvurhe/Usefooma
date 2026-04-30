@@ -1,0 +1,61 @@
+<section class="py-20 bg-gradient-to-b from-slate-50 to-white">
+
+<div class="max-w-5xl mx-auto px-6 text-center">
+
+  <h1 class="text-5xl font-bold mb-4">
+    Turn Any Website Into a <span class="text-blue-600">Phone Mockup</span>
+  </h1>
+
+  <p class="text-gray-500 mb-10 text-lg">
+    Paste your URL, choose a device, and generate a live mockup instantly.
+  </p>
+
+  <div class="bg-white shadow-xl rounded-3xl p-6 border max-w-xl mx-auto space-y-5">
+
+    <input
+      id="url"
+      type="text"
+      placeholder="https://example.com"
+      class="w-full h-12 px-4 rounded-xl border"
+    >
+
+    <select
+      id="device"
+      class="w-full h-12 px-4 rounded-xl border"
+    >
+      <option value="iphone-17">iPhone 17</option>
+      <option value="iphone-16">iPhone 16</option>
+      <option value="samsung-s24">Samsung S24 Ultra</option>
+    </select>
+
+    <button
+      onclick="goPreview()"
+      class="w-full h-12 rounded-xl bg-blue-600 text-white font-semibold hover:bg-blue-700"
+    >
+      Generate Mockup
+    </button>
+
+  </div>
+
+</div>
+
+</section>
+
+<script>
+function goPreview(){
+  let url = document.getElementById("url").value.trim();
+  let device = document.getElementById("device").value;
+
+  if(!url){
+    alert("Enter website URL");
+    return;
+  }
+
+  if(!url.startsWith("http://") && !url.startsWith("https://")){
+    url = "https://" + url;
+  }
+
+  window.location.href =
+    "view/" + device + ".html?url=" + encodeURIComponent(url);
+}
+</script>
