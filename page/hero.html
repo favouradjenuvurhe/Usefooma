@@ -40,22 +40,3 @@
 </div>
 
 </section>
-
-<script>
-function goPreview(){
-  let url = document.getElementById("url").value.trim();
-  let device = document.getElementById("device").value;
-
-  if(!url){
-    alert("Enter website URL");
-    return;
-  }
-
-  if(!url.startsWith("http://") && !url.startsWith("https://")){
-    url = "https://" + url;
-  }
-
-  window.location.href =
-    "view/" + device + ".html?url=" + encodeURIComponent(url);
-}
-</script>
