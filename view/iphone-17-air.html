@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>iPhone 17 Air Zoom Mockup</title>
+<title>iPhone 17 Air Mockup (Fixed)</title>
 
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
@@ -15,114 +15,106 @@ padding:0;
 width:100%;
 height:100%;
 overflow:hidden;
-background:#fff;
+background:#ffffff;
 font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display",sans-serif;
 touch-action:none;
 }
 
+/* STAGE */
 .stage{
 width:100%;
 height:100vh;
+display:flex;
+align-items:center;
+justify-content:center;
+background:#ffffff;
 position:relative;
-overflow:hidden;
-background:#fff;
 }
 
+/* WRAP */
 .device-wrap{
 position:absolute;
 left:50%;
 top:50%;
+transform-origin:center center;
 cursor:grab;
 user-select:none;
 touch-action:none;
-transform-origin:center center;
 }
 .device-wrap:active{cursor:grabbing;}
 
-/* shadow */
+/* SHADOW */
 .shadow-air{
 position:absolute;
 left:50%;
 top:50%;
-width:300px;
-height:120px;
+width:320px;
+height:140px;
 border-radius:50%;
-background:rgba(0,0,0,.13);
+background:rgba(0,0,0,.12);
 filter:blur(30px);
 transform:translate(-50%,-50%);
 z-index:0;
 }
 
-/* AIR BODY */
+/* DEVICE BODY (6.5 inch feel) */
 .phone{
-position:relative;
-width:315px;
-height:682px;
+width:360px;
+height:780px;
 border-radius:44px;
-background:linear-gradient(145deg,#fafafa,#d7d7d7);
+background:linear-gradient(145deg,#f8f8f8,#d9d9d9);
 border:1.5px solid #111;
 overflow:hidden;
-box-shadow:
-0 24px 50px rgba(0,0,0,.16),
-inset 2px 0 rgba(255,255,255,.75),
-inset -2px 0 rgba(0,0,0,.10);
+box-shadow:0 30px 60px rgba(0,0,0,.18);
+position:relative;
 z-index:2;
-}
-
-.phone:before{
-content:"";
-position:absolute;
-inset:0;
-border-radius:44px;
-box-shadow:
-inset 1px 1px rgba(255,255,255,.8),
-inset -1px -1px rgba(0,0,0,.12);
-pointer-events:none;
-z-index:40;
-}
-
-/* screen exact fit */
-.screen{
-position:absolute;
-top:5px;
-left:5px;
-right:5px;
-bottom:5px;
-border-radius:39px;
-overflow:hidden;
-background:#fff;
 display:flex;
 flex-direction:column;
 }
 
-/* top native area */
-.top-ui{
-height:54px;
-min-height:54px;
-position:relative;
-background:#fff;
-z-index:20;
-flex-shrink:0;
+/* INNER BORDER */
+.phone::before{
+content:"";
+position:absolute;
+inset:0;
+border-radius:44px;
+box-shadow:inset 1px 1px rgba(255,255,255,.7),
+inset -1px -1px rgba(0,0,0,.12);
+pointer-events:none;
+z-index:10;
 }
 
-/* status bar ABOVE iframe */
+/* SCREEN (FIXED — NO OVERFLOW BUG) */
+.screen{
+flex:1;
+display:flex;
+flex-direction:column;
+background:#fff;
+overflow:hidden;
+}
+
+/* STATUS BAR (USES PAGE COLOR) */
 .status-bar{
-height:26px;
-padding:0 14px;
+height:44px;
 display:flex;
 align-items:center;
 justify-content:space-between;
+padding:0 14px;
 font-size:13px;
 font-weight:600;
 color:#000;
+background:transparent; /* IMPORTANT */
+z-index:20;
 }
 
+/* RIGHT ICONS */
 .status-right{
 display:flex;
 align-items:center;
 gap:6px;
 }
 
+/* SIGNAL */
 .signal{
 display:flex;
 align-items:flex-end;
@@ -139,15 +131,14 @@ border-radius:2px;
 .signal span:nth-child(3){height:8px;}
 .signal span:nth-child(4){height:10px;}
 
-.wifi{
-font-size:12px;
-line-height:1;
-}
+/* WIFI */
+.wifi{font-size:12px}
 
+/* BATTERY */
 .battery{
 width:24px;
 height:12px;
-border:1.7px solid #000;
+border:1.6px solid #000;
 border-radius:4px;
 position:relative;
 }
@@ -159,7 +150,6 @@ top:3px;
 width:2px;
 height:5px;
 background:#000;
-border-radius:0 2px 2px 0;
 }
 .battery-level{
 position:absolute;
@@ -171,23 +161,24 @@ background:#000;
 border-radius:2px;
 }
 
-/* island under status bar */
+/* ISLAND */
 .island{
 position:absolute;
+top:10px;
 left:50%;
-top:22px;
 transform:translateX(-50%);
-width:88px;
-height:25px;
+width:90px;
+height:26px;
 background:#000;
 border-radius:999px;
+z-index:30;
 }
 
-/* iframe area only below top-ui */
+/* WEBVIEW (FIXED HEIGHT PROBLEM) */
 .webview{
 flex:1;
 min-height:0;
-background:#fff;
+overflow:hidden;
 }
 
 .webview iframe{
@@ -198,47 +189,18 @@ display:block;
 background:#fff;
 }
 
-/* buttons */
+/* SIDE BUTTONS (optional realism) */
 .btn{
 position:absolute;
 left:-2px;
 width:3px;
-background:#8f8f8f;
+background:#888;
 border-radius:4px;
 z-index:30;
 }
-.b1{top:145px;height:34px;}
-.b2{top:205px;height:58px;}
-.b3{top:278px;height:58px;}
-
-/* bottom */
-.port{
-position:absolute;
-bottom:9px;
-left:50%;
-transform:translateX(-50%);
-width:32px;
-height:4px;
-background:#666;
-border-radius:999px;
-z-index:30;
-}
-
-.grill{
-position:absolute;
-bottom:9px;
-display:flex;
-gap:4px;
-z-index:30;
-}
-.gl{left:74px;}
-.gr{right:74px;}
-.grill span{
-width:3px;
-height:3px;
-background:#666;
-border-radius:50%;
-}
+.b1{top:150px;height:36px;}
+.b2{top:210px;height:60px;}
+.b3{top:290px;height:60px;}
 
 /* zoom */
 .zoom-handle{
@@ -251,48 +213,20 @@ height:22px;
 border-radius:50%;
 background:#111;
 border:2px solid #fff;
-box-shadow:0 0 10px rgba(0,0,0,.2);
+z-index:50;
 cursor:nwse-resize;
-z-index:90;
 }
 
-/* mobile */
+/* MOBILE */
 @media(max-width:768px){
 .phone{
-width:255px;
-height:552px;
-border-radius:38px;
-}
-.screen{
-top:4px;left:4px;right:4px;bottom:4px;
-border-radius:34px;
-}
-.top-ui{
-height:48px;
-min-height:48px;
-}
-.status-bar{
-height:24px;
-padding:0 10px;
-font-size:11px;
-}
-.island{
-width:74px;
-height:22px;
-top:19px;
-}
-.shadow-air{
-width:250px;
-height:100px;
-}
-.zoom-handle{
-right:-24px;
-width:20px;
-height:20px;
+width:290px;
+height:620px;
 }
 }
 </style>
 </head>
+
 <body>
 
 <div id="app">
@@ -309,7 +243,7 @@ height:20px;
 @mousedown="startDrag($event)"
 @touchstart.prevent="touchStart($event)">
 
-<div class="shadow-air" :style="shadowStyle"></div>
+<div class="shadow-air"></div>
 
 <div class="phone">
 
@@ -323,7 +257,7 @@ height:20px;
 
 <div class="screen">
 
-<div class="top-ui">
+<!-- STATUS BAR -->
 <div class="status-bar">
 <div id="timeText">9:41</div>
 
@@ -336,18 +270,13 @@ height:20px;
 </div>
 </div>
 
+<!-- ISLAND -->
 <div class="island"></div>
-</div>
 
+<!-- WEB -->
 <div class="webview">
 <iframe id="frame"></iframe>
 </div>
-
-</div>
-
-<div class="grill gl"><span></span><span></span><span></span></div>
-<div class="port"></div>
-<div class="grill gr"><span></span><span></span><span></span></div>
 
 </div>
 </div>
@@ -362,17 +291,13 @@ document.addEventListener("DOMContentLoaded",()=>{
 document.getElementById("frame").src =
 params.get("url") || "https://example.com";
 
-updateTime();
-setInterval(updateTime,1000);
+setInterval(()=>{
+const d=new Date();
+let h=d.getHours()%12||12;
+let m=String(d.getMinutes()).padStart(2,"0");
+document.getElementById("timeText").textContent=`${h}:${m}`;
+},1000);
 });
-
-function updateTime(){
-const now = new Date();
-let h = now.getHours();
-let m = String(now.getMinutes()).padStart(2,"0");
-h = h % 12 || 12;
-document.getElementById("timeText").textContent = h + ":" + m;
-}
 
 const {createApp}=Vue;
 
@@ -397,11 +322,6 @@ left:this.x+"px",
 top:this.y+"px",
 transform:`translate(-50%,-50%) scale(${this.scale})`
 }
-},
-shadowStyle(){
-return{
-transform:`translate(-50%,-50%) scale(${this.scale})`
-}
 }
 },
 methods:{
@@ -423,11 +343,10 @@ this.y=e.clientY-this.offsetY;
 }
 if(this.zooming){
 let diff=(this.startY-e.clientY)/320;
-this.scale=Math.max(.55,Math.min(2.3,this.startScale+diff));
+this.scale=Math.max(.5,Math.min(2,this.startScale+diff));
 }
 },
 touchStart(e){
-if(this.zooming)return;
 const t=e.touches[0];
 this.dragging=true;
 this.offsetX=t.clientX-this.x;
@@ -448,7 +367,7 @@ this.y=t.clientY-this.offsetY;
 }
 if(this.zooming){
 let diff=(this.startY-t.clientY)/320;
-this.scale=Math.max(.55,Math.min(2.3,this.startScale+diff));
+this.scale=Math.max(.5,Math.min(2,this.startScale+diff));
 }
 },
 stopAction(){
