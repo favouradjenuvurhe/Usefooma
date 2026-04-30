@@ -2,72 +2,48 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Website Mockup Generator</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Live Website Mockup Generator</title>
+
 <script src="https://cdn.tailwindcss.com"></script>
+<script src="https://unpkg.com/lucide@latest"></script>
+
+<link rel="icon" href="/img/favicon.png">
 </head>
 
-<body class="bg-slate-950 text-white min-h-screen p-6">
+<body class="bg-white">
 
-<div class="max-w-2xl mx-auto mt-10">
-  
-  <h1 class="text-4xl font-bold mb-3">Live Website Mockup</h1>
-  <p class="text-slate-400 mb-8">
-    Enter website URL and choose a phone device.
-  </p>
+<div id="header"></div>
 
-  <div class="bg-slate-900 border border-slate-800 rounded-3xl p-6 space-y-5">
-
-    <div>
-      <label class="block mb-2 text-sm text-slate-400">Website URL</label>
-      <input
-        id="url"
-        type="text"
-        placeholder="https://example.com"
-        class="w-full h-12 px-4 rounded-xl bg-slate-800 border border-slate-700 outline-none"
-      >
-    </div>
-
-    <div>
-      <label class="block mb-2 text-sm text-slate-400">Select Device</label>
-      <select
-        id="device"
-        class="w-full h-12 px-4 rounded-xl bg-slate-800 border border-slate-700 outline-none"
-      >
-        <option value="iphone-17">iPhone 17</option>
-        <option value="iphone-16">iPhone 16</option>
-        <option value="samsung-s24">Samsung S24 Ultra</option>
-      </select>
-    </div>
-
-    <button
-      onclick="goPreview()"
-      class="w-full h-12 rounded-xl bg-blue-600 hover:bg-blue-700 font-semibold"
-    >
-      Generate Mockup
-    </button>
-
-  </div>
-
+<div class="sticky top-0 z-50 bg-white border-b">
+  <div id="navbar"></div>
 </div>
 
+<div id="hero"></div>
+<div id="services"></div>
+<div id="how"></div>
+<div id="cta"></div>
+<div id="footer"></div>
+
 <script>
-function goPreview(){
-  let url = document.getElementById("url").value.trim();
-  let device = document.getElementById("device").value;
+const sections = [
+  { id: 'header', file: 'page/header.html' },
+  { id: 'navbar', file: 'page/navbar.html' },
+  { id: 'hero', file: 'page/hero.html' },
+  { id: 'services', file: 'page/services.html' },
+  { id: 'how', file: 'page/how.html' },
+  { id: 'cta', file: 'page/cta.html' },
+  { id: 'footer', file: 'page/footer.html' },
+];
 
-  if(!url){
-    alert("Enter website URL");
-    return;
-  }
-
-  if(!url.startsWith("http://") && !url.startsWith("https://")){
-    url = "https://" + url;
-  }
-
-  window.location.href =
-    "view/" + device + ".html?url=" + encodeURIComponent(url);
-}
+sections.forEach(section => {
+  fetch(section.file)
+    .then(res => res.text())
+    .then(data => {
+      document.getElementById(section.id).innerHTML = data;
+    });
+});
 </script>
 
 </body>
