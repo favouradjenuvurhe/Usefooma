@@ -13,12 +13,12 @@
     Design faster with instant website mockups built around real device frames, responsive previews, and real-time URL rendering.
   </p>
 
-  <!-- INPUT + SELECT (FIXED STABLE LAYOUT) -->
+  <!-- INPUT + SELECT (JS READY) -->
   <div class="mt-10 max-w-2xl mx-auto flex items-center gap-2">
 
     <!-- URL INPUT -->
     <input
-      v-model="url"
+      id="url"
       type="text"
       placeholder="https://example.com"
       class="flex-1 min-w-0 px-4 py-2.5 border border-gray-200 rounded-xl text-sm outline-none focus:ring-2 focus:ring-purple-500"
@@ -26,39 +26,52 @@
 
     <!-- DEVICE SELECT -->
     <select
-      v-model="device"
+      id="device"
       class="w-[120px] px-3 py-2.5 border border-gray-200 rounded-xl text-sm text-gray-700 bg-white shrink-0"
     >
-      <option value="iphone17">iPhone 17</option>
+      <option value="iphone-17">iPhone 17</option>
       <option value="android">Android</option>
       <option value="tablet">Tablet</option>
     </select>
 
   </div>
 
-  <!-- BUTTON -->
+  <!-- BUTTON (NOW USES YOUR GLOBAL FUNCTION) -->
   <div class="mt-3 max-w-2xl mx-auto">
     <button
-      @click="generateMockup"
+      onclick="goPreview()"
       class="w-full px-5 py-3 rounded-xl bg-black text-white text-sm font-medium hover:opacity-90 transition"
     >
       Generate Mockup
     </button>
   </div>
 
-  <!-- IMAGE ONLY OUTPUT -->
+  <!-- IMAGE OUTPUT (3 CLICKABLE IMAGES) -->
   <div class="mt-14 max-w-4xl mx-auto">
 
-    <!-- EMPTY STATE -->
-    <div v-if="!imageSrc" class="text-gray-300 text-sm">
-      Enter a URL and generate your mockup
-    </div>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
 
-    <!-- IMAGE RESULT -->
-    <div v-if="imageSrc">
-      <img src="https://framerusercontent.com/images/gtI4rb9pTI2Sa7SpnGzU14UIE.png?scale-down-to=1024&width=3720&height=2052"
-        class="rounded-2xl border shadow-md w-full"
-      />
+      <a href="#" class="block">
+        <img
+          src="https://framerusercontent.com/images/gtI4rb9pTI2Sa7SpnGzU14UIE.png"
+          class="rounded-2xl border shadow-md w-full hover:scale-[1.02] transition"
+        />
+      </a>
+
+      <a href="#" class="block">
+        <img
+          src="https://framerusercontent.com/images/gtI4rb9pTI2Sa7SpnGzU14UIE.png"
+          class="rounded-2xl border shadow-md w-full hover:scale-[1.02] transition"
+        />
+      </a>
+
+      <a href="#" class="block">
+        <img
+          src="https://framerusercontent.com/images/gtI4rb9pTI2Sa7SpnGzU14UIE.png"
+          class="rounded-2xl border shadow-md w-full hover:scale-[1.02] transition"
+        />
+      </a>
+
     </div>
 
   </div>
