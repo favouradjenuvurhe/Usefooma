@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>iPhone 17 Air Zoom Mockup</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+
+<style>
+html,body{
+margin:0;
+padding:0;
+width:100%;
+height:100%;
+overflow:hidden;
+background:#ffffff;
+font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display",sans-serif;
+touch-action:none;
+}
+
+.stage{
+width:100%;
+height:100vh;
+position:relative;
+overflow:hidden;
+background:#ffffff;
+}
+
+/* draggable area */
+.device-wrap{
+position:absolute;
+left:50%;
+top:50%;
+transform-style:preserve-3d;
+cursor:grab;
+user-select:none;
+touch-action:none;
+}
+
+.device-wrap:active{
+cursor:grabbing;
+}
+
+/* shadow */
+.shadow-air{
+position:absolute;
+left:50%;
+top:50%;
+width:340px;
+height:180px;
+border-radius:50%;
+background:rgba(0,0,0,.12);
+filter:blur(34px);
+transform:translate(-50%,-50%);
+z-index:0;
+}
+
+/* phone */
+.phone{
+position:relative;
+width:315px;
+height:682px;
+border-radius:44px;
+background:linear-gradient(145deg,#fbfbfb,#d9d9d9);
+border:2px solid #111;
+overflow:hidden;
+box-shadow:
+inset 2px 0 rgba(255,255,255,.7),
+inset -2px 0 rgba(0,0,0,.2),
+0 16px 28px rgba(0,0,0,.12);
+z-index:2;
+}
+
+/* frame gloss */
+.phone:before{
+content:"";
+position:absolute;
+inset:0;
+border-radius:44px;
+box-shadow:
+inset 3px 0 rgba(255,255,255,.65),
+inset -3px 0 rgba(0,0,0,.16),
+inset 0 1px rgba(255,255,255,.7),
+inset 0 -1px rgba(0,0,0,.14);
+z-index:20;
+pointer-events:none;
+}
+
+/* screen */
+.screen{
+position:absolute;
+inset:5px;
+width:100%;
+height:100%;
+border-radius:30px;
+overflow:hidden;
+background:#fff;
+}
+
+/* iframe */
+iframe{
+width:100%;
+height:100%;
+border:none;
+}
+
+/* island */
+.island{
+position:absolute;
+top:14px;
+left:50%;
+transform:translateX(-50%);
+width:88px;
+height:25px;
+background:#000;
+border-radius:999px;
+z-index:50;
+pointer-events:none;
+}
+
+/* side buttons */
+.btn{
+position:absolute;
+left:-2px;
+width:3px;
+background:#a9a9a9;
+border-radius:4px;
+z-index:30;
+}
+.b1{top:148px;height:38px;}
+.b2{top:215px;height:64px;}
+.b3{top:296px;height:64px;}
+
+/* bottom */
+.port{
+position:absolute;
+bottom:10px;
+left:50%;
+transform:translateX(-50%);
+width:34px;
+height:5px;
+background:#6d6d6d;
+border-radius:99px;
+z-index:30;
+}
+
+.grill{
+position:absolute;
+bottom:10px;
+display:flex;
+gap:4px;
+z-index:30;
+}
+.gl{left:78px;}
+.gr{right:78px;}
+.grill span{
+width:3px;
+height:3px;
+background:#666;
+border-radius:50%;
+}
+
+/* zoom handle */
+.zoom-handle{
+position:absolute;
+right:-30px;
+top:50%;
+transform:translateY(-50%);
+width:22px;
+height:22px;
+border-radius:50%;
+background:#111;
+border:2px solid #fff;
+box-shadow:0 0 10px rgba(0,0,0,.2);
+cursor:nwse-resize;
+z-index:100;
+}
+
+@media(max-width:768px){
+.phone{
+width:255px;
+height:552px;
+border-radius:38px;
+}
+.screen{
+inset:4px;
+border-radius:26px;
+}
+.shadow-air{
+width:270px;
+height:150px;
+}
+.island{
+width:74px;
+height:22px;
+}
+.zoom-handle{
+right:-26px;
+width:20px;
+height:20px;
+}
+}
+</style>
+</head>
+<body>
+
+<div id="app">
+
+<div class="stage"
+@mousemove="move"
+@mouseup="stopAction"
+@mouseleave="stopAction"
+@touchmove.prevent="touchMove"
+@touchend="stopAction">
+
+<div class="device-wrap"
+:style="wrapperStyle"
+@mousedown="startDrag($event)"
+@touchstart.prevent="touchStart($event)">
+
+<div class="shadow-air" :style="shadowStyle"></div>
+
+<div class="phone">
+
+<div class="zoom-handle"
+@mousedown.stop="startZoom($event)"
+@touchstart.stop.prevent="touchZoomStart($event)"></div>
+
+<div class="btn b1"></div>
+<div class="btn b2"></div>
+<div class="btn b3"></div>
+
+<div class="screen">
+<div class="island"></div>
+<iframe id="frame" src="https://example.com"></iframe>
+</div>
+
+<div class="grill gl"><span></span><span></span><span></span></div>
+<div class="port"></div>
+<div class="grill gr"><span></span><span></span><span></span></div>
+
+</div>
+</div>
+
+</div>
+</div>
+
+<script>
+const params = new URLSearchParams(location.search);
+document.addEventListener("DOMContentLoaded",()=>{
+document.getElementById("frame").src =
+params.get("url") || "https://example.com";
+});
+
+const {createApp}=Vue;
+
+createApp({
+data(){
+return{
+x:window.innerWidth/2,
+y:window.innerHeight/2,
+scale:1,
+dragging:false,
+zooming:false,
+offsetX:0,
+offsetY:0,
+startY:0,
+startScale:1
+}
+},
+computed:{
+wrapperStyle(){
+return{
+left:this.x+'px',
+top:this.y+'px',
+transform:`translate(-50%,-50%) scale(${this.scale})`
+}
+},
+shadowStyle(){
+return{
+transform:`translate(-50%,-50%) scale(${this.scale})`
+}
+}
+},
+methods:{
+startDrag(e){
+if(this.zooming)return;
+this.dragging=true;
+this.offsetX=e.clientX-this.x;
+this.offsetY=e.clientY-this.y;
+},
+startZoom(e){
+this.zooming=true;
+this.startY=e.clientY;
+this.startScale=this.scale;
+},
+move(e){
+if(this.dragging){
+this.x=e.clientX-this.offsetX;
+this.y=e.clientY-this.offsetY;
+}
+if(this.zooming){
+let diff=(this.startY-e.clientY)/300;
+this.scale=Math.max(.5,Math.min(2.5,this.startScale+diff));
+}
+},
+touchStart(e){
+if(this.zooming)return;
+const t=e.touches[0];
+this.dragging=true;
+this.offsetX=t.clientX-this.x;
+this.offsetY=t.clientY-this.y;
+},
+touchZoomStart(e){
+const t=e.touches[0];
+this.zooming=true;
+this.startY=t.clientY;
+this.startScale=this.scale;
+},
+touchMove(e){
+const t=e.touches[0];
+
+if(this.dragging){
+this.x=t.clientX-this.offsetX;
+this.y=t.clientY-this.offsetY;
+}
+if(this.zooming){
+let diff=(this.startY-t.clientY)/300;
+this.scale=Math.max(.5,Math.min(2.5,this.startScale+diff));
+}
+},
+stopAction(){
+this.dragging=false;
+this.zooming=false;
+}
+}
+}).mount('#app');
+</script>
+
+</body>
+  </html>
