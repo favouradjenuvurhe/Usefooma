@@ -3,9 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>iPhone 17 Air Mockup FIXED</title>
+<title>iPhone 17 Air Mockup CLEAN</title>
 
-<script src="https://cdn.tailwindcss.com"></script>
 <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
 
 <style>
@@ -16,16 +15,17 @@ width:100%;
 height:100%;
 overflow:hidden;
 font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display",sans-serif;
+background:#f5f5f5;
 }
 
-/* STAGE (FIX SCROLL BLOCK ISSUE) */
+/* STAGE */
 .stage{
 width:100%;
 height:100vh;
 display:flex;
 align-items:center;
 justify-content:center;
-background:#fff;
+overflow:hidden;
 }
 
 /* DEVICE WRAP */
@@ -36,6 +36,7 @@ top:50%;
 transform-origin:center center;
 cursor:grab;
 user-select:none;
+touch-action:none;
 }
 .device-wrap:active{cursor:grabbing;}
 
@@ -61,108 +62,23 @@ background:linear-gradient(145deg,#f8f8f8,#d9d9d9);
 border:1.5px solid #111;
 overflow:hidden;
 display:flex;
-flex-direction:column;
 position:relative;
 }
 
-/* SCREEN */
+/* SCREEN FULL HEIGHT */
 .screen{
-flex:1;
+width:100%;
+height:100%;
 display:flex;
-flex-direction:column;
 overflow:hidden;
-}
-
-/* STATUS BAR (DYNAMIC COLOR) */
-.status-bar{
-height:44px;
-display:flex;
-justify-content:space-between;
-align-items:center;
-padding:0 14px;
-font-size:13px;
-font-weight:600;
-transition:.3s;
-}
-
-/* DARK MODE SUPPORT */
-.dark .status-bar{
-color:#fff;
-}
-.dark .signal span,
-.dark .battery,
-.dark .battery-level{
-background:#fff;
-border-color:#fff;
-}
-
-/* ICONS */
-.status-right{
-display:flex;
-gap:6px;
-align-items:center;
-}
-
-.signal{
-display:flex;
-gap:2px;
-align-items:flex-end;
-height:12px;
-}
-.signal span{
-width:3px;
-background:#000;
-border-radius:2px;
-}
-.signal span:nth-child(1){height:4px;}
-.signal span:nth-child(2){height:6px;}
-.signal span:nth-child(3){height:8px;}
-.signal span:nth-child(4){height:10px;}
-
-.wifi{font-size:12px;}
-
-.battery{
-width:24px;
-height:12px;
-border:1.6px solid #000;
-border-radius:4px;
 position:relative;
 }
-.battery:before{
-content:"";
-position:absolute;
-right:-4px;
-top:3px;
-width:2px;
-height:5px;
-background:#000;
-}
-.battery-level{
-position:absolute;
-left:1px;
-top:1px;
-width:16px;
-height:8px;
-background:#000;
-}
 
-/* ISLAND */
-.island{
-position:absolute;
-top:10px;
-left:50%;
-transform:translateX(-50%);
-width:90px;
-height:26px;
-background:#000;
-border-radius:999px;
-}
-
-/* IFRAME (FIXED SCROLLING) */
+/* WEBVIEW FULL 100% */
 .webview{
-flex:1;
-overflow:auto;
--webkit-overflow-scrolling:touch;
+width:100%;
+height:100%;
+overflow:hidden;
 }
 
 .webview iframe{
@@ -170,9 +86,10 @@ width:100%;
 height:100%;
 border:none;
 display:block;
+background:#fff;
 }
 
-/* BUTTONS */
+/* ZOOM HANDLE */
 .zoom-handle{
 position:absolute;
 right:-28px;
@@ -180,10 +97,19 @@ top:50%;
 transform:translateY(-50%);
 width:22px;
 height:22px;
+border-radius:50%;
 background:#111;
 border:2px solid #fff;
-border-radius:50%;
 cursor:nwse-resize;
+z-index:50;
+}
+
+/* MOBILE */
+@media(max-width:768px){
+.phone{
+width:290px;
+height:620px;
+}
 }
 </style>
 </head>
@@ -193,17 +119,16 @@ cursor:nwse-resize;
 <div id="app">
 
 <div class="stage"
-:class="{dark:isDark}"
 @mousemove="move"
 @mouseup="stopAction"
 @mouseleave="stopAction"
-@touchmove.prevent="touchMove"
+@touchmove="touchMove"
 @touchend="stopAction">
 
 <div class="device-wrap"
 :style="wrapperStyle"
 @mousedown="startDrag($event)"
-@touchstart.prevent="touchStart($event)">
+@touchstart="touchStart($event)">
 
 <div class="shadow-air"></div>
 
@@ -211,31 +136,17 @@ cursor:nwse-resize;
 
 <div class="zoom-handle"
 @mousedown.stop="startZoom($event)"
-@touchstart.stop.prevent="touchZoomStart($event)"></div>
+@touchstart.stop="touchZoomStart($event)"></div>
 
 <div class="screen">
-
-<div class="status-bar">
-<div>{{time}}</div>
-
-<div class="status-right">
-<div class="signal">
-<span></span><span></span><span></span><span></span>
-</div>
-<div class="wifi">◖◗</div>
-<div class="battery"><div class="battery-level"></div></div>
-</div>
-</div>
-
-<div class="island"></div>
-
 <div class="webview">
 <iframe id="frame"></iframe>
 </div>
-
 </div>
 
 </div>
+</div>
+
 </div>
 
 </div>
@@ -243,7 +154,7 @@ cursor:nwse-resize;
 <script>
 const params = new URLSearchParams(location.search);
 
-const {createApp} = Vue;
+const {createApp}=Vue;
 
 createApp({
 data(){
@@ -256,9 +167,7 @@ zooming:false,
 offsetX:0,
 offsetY:0,
 startY:0,
-startScale:1,
-time:"9:41",
-isDark:false
+startScale:1
 }
 },
 
@@ -275,26 +184,9 @@ transform:`translate(-50%,-50%) scale(${this.scale})`
 mounted(){
 document.getElementById("frame").src =
 params.get("url") || "https://example.com";
-
-setInterval(()=>{
-let d=new Date();
-let h=d.getHours()%12||12;
-let m=String(d.getMinutes()).padStart(2,"0");
-this.time=`${h}:${m}`;
-},1000);
-
-/* SIMPLE DARK DETECTION */
-this.detectTheme();
 },
 
 methods:{
-
-detectTheme(){
-try{
-const bg = getComputedStyle(document.body).backgroundColor;
-this.isDark = bg.includes("0,0,0") || bg.includes("rgb(0");
-}catch(e){}
-},
 
 startDrag(e){
 if(this.zooming)return;
@@ -352,6 +244,7 @@ stopAction(){
 this.dragging=false;
 this.zooming=false;
 }
+
 }
 
 }).mount("#app");
