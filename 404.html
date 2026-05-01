@@ -1,1 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<title>Use Fooma</title>
+
+<meta name="description" content="Usefooma is a web-based website mockup tool that lets you instantly preview any URL inside realistic device frames like iPhone, Android, and tablets. No design software needed—just paste a link and generate live, shareable mockups in seconds.">
+
+<meta name="keywords" content="website mockup tool, instant website preview, device mockup generator, iPhone mockup online, Android mockup preview, website frame viewer, responsive website preview tool, UI mockup generator, web design preview tool, URL mockup generator">
+
+<meta name="author" content="Usefooma">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://usefooma.site">
+
+<!-- Open Graph -->
+<meta property="og:title" content="Usefooma – Instant Website Mockup & Device Preview Tool">
+<meta property="og:description" content="Turn any website into realistic device mockups instantly. Preview URLs inside iPhone, Android, and tablet frames—fast, simple, and shareable.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://usefooma.site">
+<meta property="og:image" content="/img/og-image.png">
+<meta property="og:site_name" content="Usefooma">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Usefooma – Instant Website Mockup Tool">
+<meta name="twitter:description" content="Instantly preview any website inside realistic device frames. No Photoshop, no setup—just paste a URL and generate mockups.">
+<meta name="twitter:image" content="/img/og-image.png">
+
+<link rel="icon" href="/img/favicon.png">
+
+<!-- Performance -->
+<link rel="preconnect" href="https://cdn.tailwindcss.com">
+<link rel="preconnect" href="https://unpkg.com">
+
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://unpkg.com/lucide@latest"></script>
+
+<!-- WebApplication Schema -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Usefooma",
+  "url": "https://usefooma.site",
+  "description": "Instant website mockup tool to preview any URL inside realistic device frames.",
+  "applicationCategory": "DesignApplication",
+  "operatingSystem": "All",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  }
+}
+</script>
+
+<!-- FAQ Schema -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is Usefooma?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Usefooma is a web-based tool that lets you instantly preview any website inside realistic device mockups like iPhone, Android, and tablets."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How does Usefooma work?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Paste a website URL, select a device frame, and instantly generate a live preview inside that device."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Do I need design software?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. Usefooma runs directly in your browser with no Photoshop or setup required."
+      }
+    }
+  ]
+}
+</script>
+
+<!-- Local Business / Brand Schema -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Usefooma",
+  "url": "https://usefooma.site",
+  "logo": "https://usefooma.site/img/favicon.png",
+  "sameAs": []
+}
+</script>
+
+</head>
+
+<body class="bg-white">
+
+<div id="header"></div>
+
+<div class="sticky top-0 z-50 bg-white border-b">
+  <div id="navbar"></div>
+</div>
+
+<div id="header"></div>
+<div id="navbar"></div>
+<div id="404"></div>
+<div id="footer"></div>
+
+<script>
+const sections = [
+  { id: 'header', file: 'page/header.html' },
+  { id: 'navbar', file: 'page/navbar.html' },
+  { id: '404', file: 'page/404.html' },
+  { id: 'footer', file: 'page/footer.html' },
+];
+
+sections.forEach(section => {
+  fetch(section.file)
+    .then(res => res.text())
+    .then(data => {
+      document.getElementById(section.id).innerHTML = data;
+
+      // re-init icons after load
+      if (window.lucide) lucide.createIcons();
+    });
+});
+
+// ✅ GLOBAL FUNCTION (NOW WORKS)
+function goPreview(){
+  let url = document.getElementById("url").value.trim();
+  let device = document.getElementById("device").value;
+
+  if(!url){
+    alert("Enter website URL");
+    return;
+  }
+
+  if(!url.startsWith("http://") && !url.startsWith("https://")){
+    url = "https://" + url;
+  }
+
+  window.location.href =
+    "view/" + device + "?url=" + encodeURIComponent(url);
+}
+</script>
+
+</body>
+</html>
