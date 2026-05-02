@@ -182,109 +182,72 @@ class="bg-white rounded-2xl p-4 flex items-center gap-3 border border-gray-200 c
 <div id="footer"></div>
 
 <script>
-// ✅ LOAD SECTIONS  
-const sections = [  
-  { id: 'header', file: '/page/header.html' },  
-  { id: 'navbar', file: '/page/navbar.html' },  
-  { id: 'footer', file: '/page/footer.html' },  
-];  
-  
-sections.forEach(section => {  
-  fetch(section.file)  
-    .then(res => res.text())  
-    .then(data => {  
-      document.getElementById(section.id).innerHTML = data;  
-      lucide.createIcons();  
-    })  
-    .catch(err => console.error(`Error loading ${section.file}`, err));  
-});  
-  
-const { createApp } = Vue;  
-  
-createApp({  
-data(){  
-return{ image:null }  
-},  
-methods:{  
+// ✅ LOAD SECTIONS
+const sections = [
+  { id: 'header', file: '/page/header.html' },
+  { id: 'navbar', file: '/page/navbar.html' },
+  { id: 'footer', file: '/page/footer.html' },
+];
 
-triggerUpload(){  
-this.$refs.fileInput.click();  
-},  
+sections.forEach(section => {
+  fetch(section.file)
+    .then(res => res.text())
+    .then(data => {
+      document.getElementById(section.id).innerHTML = data;
 
-handleUpload(e){  
-const file = e.target.files[0];  
-if(!file) return;  
+      // ✅ Re-render icons inside loaded HTML
+      lucide.createIcons();
+    })
+    .catch(err => console.error(`Error loading ${section.file}`, err));
+});
 
-const reader = new FileReader();  
-reader.onload = (e)=>{  
-this.image = e.target.result;  
-};  
-reader.readAsDataURL(file);  
-},  
+const { createApp } = Vue;
 
-downloadPNG(){  
-this.exportImage("png");  
-},  
+createApp({
+data(){
+return{ image:null }
+},
+methods:{
+triggerUpload(){
+this.$refs.fileInput.click();
+},
+handleUpload(e){
+const file = e.target.files[0];
+if(!file) return;
 
-downloadJPG(){  
-this.exportImage("jpeg");  
-},  
+const reader = new FileReader();
+reader.onload = (e)=>{
+this.image = e.target.result;
+};
+reader.readAsDataURL(file);
+},
+downloadPNG(){
+this.exportImage("png");
+},
+downloadJPG(){
+this.exportImage("jpeg");
+},
+exportImage(type){
+const el = document.getElementById("captureArea");
 
-exportImage(type){  
-const el = document.getElementById("captureArea");  
-const phone = document.querySelector(".phone");  
-
-// 🔥 SAVE original transform
-const originalTransform = phone.style.transform;
-
-// 🔥 REMOVE SCALE before capture (CRITICAL)
-phone.style.transform = "rotate(-24deg) rotateX(10deg) scale(1) translateY(20px)";
-
-// 🎯 TARGET HD SIZE
-const EXPORT_WIDTH = 1260;
-const EXPORT_HEIGHT = 1000;
-
-// 🚀 CAPTURE IN HIGH SCALE
-html2canvas(el,{  
-  backgroundColor:null,  
-  scale:4, // increase to 5 for ultra
-  useCORS:true
-}).then(canvas=>{  
-
-  // 🔄 RESTORE transform
-  phone.style.transform = originalTransform;
-
-  // 🎯 CREATE FINAL HD CANVAS
-  const finalCanvas = document.createElement("canvas");
-  finalCanvas.width = EXPORT_WIDTH;
-  finalCanvas.height = EXPORT_HEIGHT;
-
-  const ctx = finalCanvas.getContext("2d");
-
-  // ✨ SMOOTH QUALITY
-  ctx.imageSmoothingEnabled = true;
-  ctx.imageSmoothingQuality = "high";
-
-  // 🔥 DRAW SHARP OUTPUT
-  ctx.drawImage(canvas, 0, 0, EXPORT_WIDTH, EXPORT_HEIGHT);
-
-  const link = document.createElement("a");  
-  link.download = `mockup-HD.${type}`;  
-
-  link.href = type === "png"  
-    ? finalCanvas.toDataURL("image/png")  
-    : finalCanvas.toDataURL("image/jpeg", 1.0); // MAX QUALITY  
-
-  link.click();  
-});  
+html2canvas(el,{
+backgroundColor:null,
+scale:4
+}).then(canvas=>{
+const link = document.createElement("a");
+link.download = `mockup.${type}`;
+link.href = type === "png"
+? canvas.toDataURL("image/png")
+: canvas.toDataURL("image/jpeg",0.95);
+link.click();
+});
 }
-
-},  
-mounted(){  
-lucide.createIcons();  
-}  
-}).mount('#app');  
+},
+mounted(){
+lucide.createIcons();
+}
+}).mount('#app');
 </script>
 
 </body>
-  </html>
+</html>
