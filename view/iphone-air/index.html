@@ -136,7 +136,7 @@ class="relative rounded-2xl overflow-hidden bg-gray-200 w-full aspect-[1260/1000
 </div>
 </div>
 
-<div class="bottom-port"></div>
+
 
 </div>
 </div>
@@ -232,10 +232,10 @@ const el = document.getElementById("captureArea");
 
 html2canvas(el,{
 backgroundColor:null,
-scale:4
+scale:5
 }).then(canvas=>{
 const link = document.createElement("a");
-link.download = `mockup.${type}`;
+link.download = `usefooma-mockup.${type}`;
 link.href = type === "png"
 ? canvas.toDataURL("image/png")
 : canvas.toDataURL("image/jpeg",0.95);
