@@ -21,32 +21,30 @@ body {
   background: linear-gradient(145deg, #e5e7eb, #d1d5db);
 }
 
-/* Tablet (STRAIGHT + FIXED SIZE) */
+/* Tablet */
 .tablet {
   width: 280px;
   height: 180px;
-  border-radius: 24px;
+  border-radius: 20px;
   background: #111;
   box-shadow:
-    0 25px 50px rgba(0,0,0,0.25),
-    0 6px 15px rgba(0,0,0,0.15);
+    0 20px 40px rgba(0,0,0,0.25),
+    0 5px 12px rgba(0,0,0,0.15);
 
-  /* straight (FIXED) */
   transform: none;
-
   position: relative;
 }
 
 /* Screen */
 .screen {
   position: absolute;
-  inset: 8px;
-  border-radius: 16px;
+  inset: 6px;
+  border-radius: 14px;
   overflow: hidden;
   background: #000;
 }
 
-/* Light reflection */
+/* Reflection */
 .screen::after {
   content: "";
   position: absolute;
@@ -54,34 +52,28 @@ body {
   background: linear-gradient(120deg, transparent, rgba(255,255,255,0.08));
 }
 
-/* Stand (adjusted for straight tablet) */
-.stand {
-  position: absolute;
-  right: -20px;
-  bottom: -6px;
-  width: 50px;
-  height: 90px;
-  background: #000;
-  border-radius: 10px;
-  transform: skewY(-10deg);
-}
-
-/* Shadow (flat style) */
+/* Shadow */
 .shadow-floor {
   position: absolute;
-  bottom: 60px;
+  bottom: 70px;
   left: 50%;
   transform: translateX(-50%);
-  width: 200px;
-  height: 30px;
+  width: 180px;
+  height: 25px;
   background: rgba(0,0,0,0.25);
   border-radius: 50%;
-  filter: blur(18px);
+  filter: blur(15px);
 }
 </style>
 </head>
 
 <body>
+
+<!-- ✅ DYNAMIC HEADER -->
+<div id="header"></div>
+
+<!-- ✅ DYNAMIC NAVBAR -->
+<div id="navbar"></div>
 
 <div id="app" class="max-w-md mx-auto py-6 px-4">
 
@@ -120,7 +112,7 @@ class="relative rounded-2xl overflow-hidden w-full aspect-[1260/1000] scene flex
             <div class="w-1/4 bg-[#a3e635]"></div>
           </div>
 
-          <div class="absolute top-4 left-6 text-black text-3xl font-bold">
+          <div class="absolute top-3 left-4 text-black text-2xl font-bold">
             Mockups
           </div>
         </template>
@@ -128,8 +120,6 @@ class="relative rounded-2xl overflow-hidden w-full aspect-[1260/1000] scene flex
       </div>
     </div>
   </div>
-
-  
 </div>
 
 </div>
@@ -174,7 +164,27 @@ class="bg-white rounded-2xl p-4 flex items-center gap-3 border border-gray-200 c
 
 </div>
 
+<!-- ✅ DYNAMIC FOOTER -->
+<div id="footer"></div>
+
 <script>
+// ✅ LOAD HEADER / NAVBAR / FOOTER
+const sections = [
+  { id: 'header', file: '/page/header.html' },
+  { id: 'navbar', file: '/page/navbar.html' },
+  { id: 'footer', file: '/page/footer.html' },
+];
+
+sections.forEach(section => {
+  fetch(section.file)
+    .then(res => res.text())
+    .then(data => {
+      document.getElementById(section.id).innerHTML = data;
+      lucide.createIcons();
+    })
+    .catch(err => console.error(`Error loading ${section.file}`, err));
+});
+
 const { createApp } = Vue;
 
 createApp({
@@ -226,4 +236,4 @@ lucide.createIcons();
 </script>
 
 </body>
-  </html>
+</html>
