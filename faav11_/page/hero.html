@@ -1,80 +1,66 @@
 <!-- HERO -->
-<main class="text-center px-6 pt-16">
+<main class="px-6 pt-16 max-w-5xl mx-auto">
 
-  <h1 class="text-4xl md:text-6xl font-extrabold leading-tight text-black">
-    Favour Adjenuvurhe — Full-Stack Developer Building SaaS & Fintech Systems
-  </h1>
+  <!-- TOP FLEX SECTION -->
+  <div class="flex flex-col md:flex-row items-start gap-6">
 
-  <p class="mt-4 text-gray-500 max-w-2xl mx-auto text-sm md:text-base">
-    I design and build modern web applications, dashboards, and scalable digital products.
-  </p>
+    <!-- PROFILE IMAGE -->
+    <div class="flex-shrink-0">
+      <img
+        src="/img/profile.jpg"
+        alt="Favour Adjenuvurhe"
+        class="w-24 h-24 rounded-full object-cover border border-gray-200"
+      />
+    </div>
 
-  <p class="mt-4 text-gray-400 max-w-2xl mx-auto text-sm md:text-base">
-    Known online as “faav11_”, I focus on frontend systems, UI/UX design, and SaaS-style platforms using Vue.js, React, and Tailwind CSS.
-    I build real-world products with a startup mindset — from ideas to working systems.
-  </p>
+    <!-- TEXT SECTION -->
+    <div class="text-left">
 
-  <!-- INPUT + SELECT -->
-  <div class="mt-10 max-w-2xl mx-auto flex items-center gap-2">
+      <h1 class="text-2xl md:text-4xl font-bold text-black leading-tight">
+        Hi, I'm Favour Adjenuvurhe.
+      </h1>
 
-    <!-- URL INPUT -->
-    <input
-      id="url"
-      type="text"
-      placeholder="Enter project link or GitHub repo"
-      class="flex-1 min-w-0 px-4 py-2.5 border border-gray-200 rounded-xl text-sm outline-none focus:ring-2 focus:ring-purple-500"
-    />
+      <p class="text-lg md:text-xl text-gray-700 mt-1 font-medium">
+        Software Developer
+      </p>
 
-    <!-- DEVICE SELECT -->
-    <select
-      id="device"
-      class="w-[120px] px-3 py-2.5 border border-gray-200 rounded-xl text-sm text-gray-700 bg-white shrink-0"
-    >
-      <option value="iphone-17-air">Preview Mode</option>
-      <option value="iphone-17">Mobile UI</option>
-      <option value="android">Android UI</option>
-      <option value="tablet">Tablet UI</option>
-    </select>
-
-  </div>
-
-  <!-- BUTTON -->
-  <div class="mt-3 max-w-2xl mx-auto">
-    <button
-      onclick="goPreview()"
-      class="w-full px-5 py-3 rounded-xl bg-black text-white text-sm font-medium hover:opacity-90 transition"
-    >
-      View My Work
-    </button>
-  </div>
-
-  <!-- IMAGE OUTPUT (PURE IMAGES ONLY - NO CARDS, NO SHADOWS) -->
-  <div class="mt-14 max-w-4xl mx-auto">
-
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-
-      <a href="#">
-        <img
-          src="/img/primary.webp"
-          class="w-full rounded-xl"
-        />
-      </a>
-
-      <a href="#">
-        <img
-          src="/img/primary (1).webp"
-          class="w-full rounded-xl"
-        />
-      </a>
-
-      <a href="#">
-        <img
-          src="/img/primary (2).webp"
-          class="w-full rounded-xl"
-        />
-      </a>
+      <p class="mt-3 text-gray-500 text-sm md:text-base max-w-xl">
+        I build mobile apps, also websites.
+        <br />
+        Work, Eat, Sleep...
+      </p>
 
     </div>
+  </div>
+
+  <!-- PROJECT SCROLL SECTION -->
+  <div class="mt-12">
+
+    <h2 class="text-sm font-semibold text-gray-500 mb-3">
+      My Projects
+    </h2>
+
+    <div class="flex gap-4 overflow-x-auto pb-3 scroll-smooth">
+
+      <img src="/img/primary.webp" class="w-64 h-40 rounded-xl object-cover flex-shrink-0" />
+      <img src="/img/primary (1).webp" class="w-64 h-40 rounded-xl object-cover flex-shrink-0" />
+      <img src="/img/primary (2).webp" class="w-64 h-40 rounded-xl object-cover flex-shrink-0" />
+
+    </div>
+
+  </div>
+
+  <!-- ABOUT SECTION -->
+  <div class="mt-14">
+
+    <h2 class="text-xl font-bold text-black">
+      About
+    </h2>
+
+    <p class="mt-3 text-gray-500 text-sm md:text-base max-w-2xl">
+      I am a software developer focused on building modern web applications, SaaS platforms, and mobile-friendly interfaces.
+      I enjoy turning ideas into real, usable products with clean UI and smooth user experience.
+    </p>
 
   </div>
 
