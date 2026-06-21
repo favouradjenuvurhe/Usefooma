@@ -1,0 +1,114 @@
+<section class="px-4 md:px-8 pt-6 md:pt-12 pb-10 bg-white">
+
+  <div class="max-w-7xl mx-auto">
+
+    <!-- Badge -->
+    <div class="inline-flex items-center justify-center
+                px-4 py-1.5 rounded-full
+                border border-gray-200
+                bg-[#fff5ef]">
+
+      <span class="text-[10px] md:text-xs font-semibold tracking-[0.2em] uppercase text-[#f85902]">
+        Login
+      </span>
+
+    </div>
+
+    <!-- Heading -->
+    <div class="mt-5">
+
+      <h2 class="font-bold tracking-tight leading-[1.05]
+                 text-[clamp(1.8rem,4.8vw,3.4rem)]
+                 text-black">
+
+        Welcome back
+
+      </h2>
+
+    </div>
+
+    <!-- Short Description -->
+    <div class="mt-3 max-w-xl">
+
+      <p class="text-sm md:text-lg text-gray-500 leading-relaxed">
+        Sign in to continue.
+      </p>
+
+    </div>
+
+    <!-- ================= LOGIN FORM ================= -->
+    <div class="mt-8 max-w-md">
+
+      <form class="space-y-6" id="loginForm">
+
+        <!-- Email -->
+        <div>
+          <label class="block text-sm text-gray-600 mb-1">Email</label>
+          <input
+            type="email"
+            id="email"
+            placeholder="Enter your email"
+            class="w-full bg-transparent border-b border-gray-300 focus:border-[#f85902]
+                   outline-none py-2 text-gray-900 placeholder-gray-400"
+          />
+        </div>
+
+        <!-- Password -->
+        <div>
+          <label class="block text-sm text-gray-600 mb-1">Password</label>
+          <input
+            type="password"
+            id="password"
+            placeholder="Enter your password"
+            class="w-full bg-transparent border-b border-gray-300 focus:border-[#f85902]
+                   outline-none py-2 text-gray-900 placeholder-gray-400"
+          />
+        </div>
+
+        <!-- Forgot Password -->
+        <div class="flex justify-end -mt-2">
+          <a href="/auth/recovery"
+             class="text-sm text-[#f85902] font-medium hover:underline">
+            Forgot password?
+          </a>
+        </div>
+
+        <!-- Button -->
+        <button
+          type="submit"
+          class="w-full md:w-auto px-8 py-3 rounded-full
+                 bg-[#f85902] text-white font-semibold
+                 hover:opacity-90 transition">
+          Sign in
+        </button>
+
+      </form>
+
+    </div>
+
+    <!-- Sign up link -->
+    <div class="mt-8 text-center">
+
+      <p class="text-sm text-gray-600">
+        Don’t have an account?
+        <a href="/auth/get-started" class="text-[#f85902] font-semibold">Sign up</a>
+      </p>
+
+    </div>
+
+  </div>
+
+</section>
+
+<style>
+h2{
+  text-rendering:optimizeLegibility;
+  -webkit-font-smoothing:antialiased;
+}
+
+@media(max-width:768px){
+  h2{
+    line-height:1.05;
+  }
+}
+</style>
