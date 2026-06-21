@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Dashboard</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://unpkg.com/lucide@latest"></script>
+
+<style>
+#backdrop {
+  display: none;
+}
+#backdrop.active {
+  display: block;
+}
+</style>
+</head>
+
+<body class="bg-gray-50">
+
+<!-- BACKDROP -->
+<div id="backdrop"
+     class="fixed inset-0 bg-black/40 z-40 md:hidden"
+     onclick="closeMobileSidebar()"></div>
+
+<!-- STATIC CONTAINERS (ALL SECTIONS LOAD HERE) -->
+<div id="header"></div>
+
+<div class="flex">
+
+  <div id="sidebar" class="hidden md:block w-64"></div>
+
+  <main class="flex-1 p-4 md:p-6">
+
+    <div id="overview"></div>
+    <div id="notice"></div>
+    <div id="quickAction"></div>
+    <div id="products"></div>
+    <div id="analysis"></div>
+    <div id="blog"></div>
+
+  </main>
+
+</div>
+
+<!-- MOBILE SIDEBAR -->
+<div id="mobile-sidebar"
+     class="fixed top-0 left-0 h-full w-72 bg-white shadow-lg z-50 transform -translate-x-full transition-transform md:hidden">
+</div>
+
+<script type="module">
+
+import { getMyDetails } from "/config/myDetails.js";
+
+/* ================= AUTH ================= */
+const uid = localStorage.getItem("uid");
+
+if (!uid) {
+  window.location.href = "/auth/login";
+}
+
+/* ================= SECTION LIST ================= */
+const SECTIONS = [
+  { id: "header", file: "/dashboard/page/header.html" },
+  { id: "sidebar", file: "/dashboard/page/sidebar.html" },
+  { id: "mobile-sidebar", file: "/dashboard/page/mobile-sidebar.html" },
+
+  { id: "overview", file: "/dashboard/page/overview.html" },
+  { id: "notice", file: "/dashboard/page/notice.html" },
+  { id: "quickAction", file: "/dashboard/page/quick-action.html" },
+  { id: "products", file: "/dashboard/page/products.html" },
+  { id: "analysis", file: "/dashboard/page/analysis.html" },
+  { id: "blog", file: "/dashboard/page/blog.html" },
+];
+
+/* ================= LOAD FUNCTION ================= */
+async function loadSection(id, file) {
+
+  try {
+
+    const res = await fetch(file);
+
+    if (!res.ok) {
+      throw new Error(`Failed: ${file}`);
+    }
+
+    document.getElementById(id).innerHTML =
+      await res.text();
+
+    lucide.createIcons();
+
+  } catch (err) {
+
+    console.error(
+      "Load error:",
+      err
+    );
+
+  }
+
+}
+
+/* ================= LOAD ALL SECTIONS ================= */
+async function loadAllSections() {
+
+  for (const section of SECTIONS) {
+    await loadSection(
+      section.id,
+      section.file
+    );
+  }
+
+}
+
+/* ================= SIDEBAR TOGGLE ================= */
+window.openMobileSidebar = function () {
+
+  document
+    .getElementById("mobile-sidebar")
+    .classList.remove("-translate-x-full");
+
+  document
+    .getElementById("backdrop")
+    .classList.add("active");
+
+};
+
+window.closeMobileSidebar = function () {
+
+  document
+    .getElementById("mobile-sidebar")
+    .classList.add("-translate-x-full");
+
+  document
+    .getElementById("backdrop")
+    .classList.remove("active");
+
+};
+
+/* ================= GREETING ================= */
+function getGreeting() {
+
+  const nigeriaTime =
+    new Date().toLocaleString(
+      "en-US",
+      {
+        timeZone: "Africa/Lagos"
+      }
+    );
+
+  const hour =
+    new Date(nigeriaTime).getHours();
+
+  if (hour < 12) {
+    return "Good morning";
+  }
+
+  if (hour < 17) {
+    return "Good afternoon";
+  }
+
+  return "Good evening";
+
+}
+
+/* ================= OVERVIEW DATA ================= */
+async function initOverview() {
+
+  try {
+
+    const data =
+      await getMyDetails();
+
+    if (!data.success) return;
+
+    /* USER */
+    const userName =
+      document.getElementById(
+        "userName"
+      );
+
+    const firstName =
+      document.getElementById(
+        "firstName"
+      );
+
+    const greeting =
+      document.getElementById(
+        "greeting"
+      );
+
+    /* ACCOUNT */
+    const balance =
+      document.getElementById(
+        "balance"
+      );
+
+    const plan =
+      document.getElementById(
+        "plan"
+      );
+
+    const txCount =
+      document.getElementById(
+        "txCount"
+      );
+
+    /* TRANSACTIONS */
+    const recentTransactions =
+      document.getElementById(
+        "recentTransactions"
+      );
+
+    if (userName) {
+
+      userName.innerText =
+        `${data.firstName || ""} ${data.lastName || ""}`.trim();
+
+    }
+
+    if (firstName) {
+
+      firstName.innerText =
+        data.firstName || "User";
+
+    }
+
+    if (greeting) {
+
+      greeting.innerText =
+        getGreeting();
+
+    }
+
+    if (balance) {
+
+      balance.innerText =
+        `₦${Number(
+          data.balance || 0
+        ).toLocaleString()}`;
+
+    }
+
+    if (plan) {
+
+      plan.innerText =
+        data.pluginAccess?.plan ||
+        "Free";
+
+    }
+
+    if (txCount) {
+
+      txCount.innerText =
+        data.transactionCount || 0;
+
+    }
+
+    /* ================= RECENT TRANSACTIONS ================= */
+    if (
+      recentTransactions &&
+      data.recentTransactions
+    ) {
+
+      recentTransactions.innerHTML = "";
+
+      data.recentTransactions
+        .slice(0, 5)
+        .forEach((tx) => {
+
+          const amount =
+            Number(
+              tx.amount || 0
+            ).toLocaleString();
+
+          const sign =
+            tx.type === "credit"
+              ? "+"
+              : "-";
+
+          const icon =
+            tx.type === "credit"
+              ? "↗"
+              : "↙";
+
+          recentTransactions.innerHTML += `
+            <div class="flex items-center justify-between py-3 border-b border-gray-100">
+
+              <div class="flex items-center gap-3">
+
+                <div class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center text-sm">
+                  ${icon}
+                </div>
+
+                <div>
+                  <p class="text-sm font-medium text-gray-900">
+                    ${tx.description || "Transaction"}
+                  </p>
+
+                  <p class="text-xs text-gray-500">
+                    ${tx.reference || ""}
+                  </p>
+                </div>
+
+              </div>
+
+              <div class="text-right">
+
+                <p class="text-sm font-semibold ${
+                  tx.type === "credit"
+                    ? "text-green-600"
+                    : "text-red-500"
+                }">
+                  ${sign}₦${amount}
+                </p>
+
+                <p class="text-xs text-gray-400">
+                  ${
+                    tx.status || ""
+                  }
+                </p>
+
+              </div>
+
+            </div>
+          `;
+
+        });
+
+    }
+
+  } catch (err) {
+
+    console.error(err);
+
+  }
+
+}
+
+/* ================= INIT ================= */
+await loadAllSections();
+
+/* ================= LOAD USER DATA ================= */
+await initOverview();
+
+  </script>
+
+</body>
+</html>
