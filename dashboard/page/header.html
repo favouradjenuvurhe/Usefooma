@@ -1,0 +1,110 @@
+<!-- DASHBOARD HEADER -->
+<header class="sticky top-0 z-50 bg-white border-b border-gray-100">
+
+    <div class="max-w-7xl mx-auto px-4 py-3">
+
+        <div class="flex items-center justify-between gap-4">
+
+            <!-- LEFT -->
+            <div class="flex items-center gap-4">
+
+                <!-- Mobile Menu -->
+                <button onclick="openMobileSidebar()"
+                        class="md:hidden w-11 h-11 rounded-full border border-gray-100 flex items-center justify-center">
+
+                    <i data-lucide="menu" class="w-5 h-5"></i>
+
+                </button>
+
+                <!-- Logo -->
+                <a href="/" class="flex items-center">
+
+                    <img
+                        src="/file_00000000850071f4996982b16d5925d2.jpg"
+                        alt="Logo"
+                        class="h-10 md:h-12 w-auto object-contain">
+
+                </a>
+
+            </div>
+
+            <!-- DESKTOP SEARCH -->
+            <div class="hidden md:flex flex-1 max-w-xl">
+
+                <div class="relative w-full">
+
+                    <input
+                        type="text"
+                        placeholder="Search anything..."
+                        class="w-full h-12 rounded-full border-2 border-gray-100 bg-white pl-12 pr-5 text-sm text-gray-700 outline-none focus:border-[#f85902] transition-all">
+
+                    <i data-lucide="search"
+                       class="w-5 h-5 text-gray-400 absolute left-4 top-1/2 -translate-y-1/2"></i>
+
+                </div>
+
+            </div>
+
+            <!-- RIGHT -->
+            <div class="flex items-center gap-2 md:gap-3">
+
+                <!-- Support -->
+                <button
+                    class="hidden md:flex items-center justify-center w-12 h-12 rounded-full border border-gray-100 hover:border-[#f85902] transition">
+
+                    <i data-lucide="life-buoy"
+                       class="w-5 h-5 text-gray-700"></i>
+
+                </button>
+
+                <!-- Notifications -->
+                <button
+                    class="relative flex items-center justify-center w-11 h-11 md:w-12 md:h-12 rounded-full border border-gray-100 hover:border-[#f85902] transition">
+
+                    <i data-lucide="bell"
+                       class="w-5 h-5 text-gray-700"></i>
+
+                    <!-- Notification Dot -->
+                    <span class="absolute top-2 right-2 w-2.5 h-2.5 bg-[#f85902] rounded-full"></span>
+
+                </button>
+
+                <!-- Avatar -->
+                <button
+                    class="w-11 h-11 md:w-12 md:h-12 rounded-full overflow-hidden border-2 border-gray-100">
+
+                    <img
+                        src="https://i.pravatar.cc/150?img=12"
+                        alt="Profile"
+                        class="w-full h-full object-cover">
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</header>
+
+<style>
+
+/* Smooth header */
+header{
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+/* Search focus glow */
+input:focus{
+    box-shadow: 0 0 0 4px rgba(248,89,2,.08);
+}
+
+</style>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    lucide.createIcons();
+});
+</script>
