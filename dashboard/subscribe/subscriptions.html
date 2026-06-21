@@ -1,0 +1,151 @@
+<!-- SUBSCRIPTIONS SECTION -->
+
+<div class="space-y-4">
+
+  <!-- HEADER -->
+  <div class="bg-white rounded-2xl border border-gray-100 p-4">
+
+    <h2 class="text-lg font-semibold text-gray-900">
+      My Subscriptions
+    </h2>
+
+    <p class="text-xs text-gray-500 mt-1">
+      Track active, expiring and expired subscriptions
+    </p>
+
+  </div>
+
+  <!-- SUMMARY GRID -->
+  <div id="subSummary" class="grid grid-cols-2 md:grid-cols-4 gap-3">
+
+    <div class="bg-white p-3 rounded-xl border">
+      <p class="text-xs text-gray-500">Total</p>
+      <h3 id="totalSub" class="font-semibold">0</h3>
+    </div>
+
+    <div class="bg-green-50 p-3 rounded-xl border border-green-100">
+      <p class="text-xs text-green-600">Active</p>
+      <h3 id="activeSub" class="font-semibold text-green-700">0</h3>
+    </div>
+
+    <div class="bg-yellow-50 p-3 rounded-xl border border-yellow-100">
+      <p class="text-xs text-yellow-600">Expiring</p>
+      <h3 id="expiringSub" class="font-semibold text-yellow-700">0</h3>
+    </div>
+
+    <div class="bg-red-50 p-3 rounded-xl border border-red-100">
+      <p class="text-xs text-red-600">Expired</p>
+      <h3 id="expiredSub" class="font-semibold text-red-700">0</h3>
+    </div>
+
+  </div>
+
+  <!-- LIST -->
+  <div id="subList" class="space-y-3 mt-4">
+
+    <div class="text-sm text-gray-400">
+      Loading subscriptions...
+    </div>
+
+  </div>
+
+</div>
+
+<script type="module">
+import { getMySubscriptions } from "/config/Subscribe.js";
+
+/* ================= LOAD SUBSCRIPTIONS ================= */
+async function loadSubscriptionsUI() {
+
+  const data = await getMySubscriptions();
+
+  if (!data.success) {
+    document.getElementById("subList").innerHTML =
+      `<p class="text-red-500 text-sm">Failed to load subscriptions</p>`;
+    return;
+  }
+
+  /* ================= SUMMARY ================= */
+  document.getElementById("totalSub").innerText = data.summary.total;
+  document.getElementById("activeSub").innerText = data.summary.active;
+  document.getElementById("expiringSub").innerText = data.summary.expiring;
+  document.getElementById("expiredSub").innerText = data.summary.expired;
+
+  /* ================= LIST ================= */
+  const list = document.getElementById("subList");
+  list.innerHTML = "";
+
+  if (!data.subscriptions.length) {
+    list.innerHTML = `
+      <p class="text-sm text-gray-500">No subscriptions found</p>
+    `;
+    return;
+  }
+
+  data.subscriptions.forEach(sub => {
+
+    const color =
+      sub.status === "active"
+        ? "text-green-600"
+        : sub.status === "expiring"
+        ? "text-yellow-600"
+        : "text-red-600";
+
+    const bg =
+      sub.status === "active"
+        ? "bg-green-50"
+        : sub.status === "expiring"
+        ? "bg-yellow-50"
+        : "bg-red-50";
+
+    list.innerHTML += `
+      <div class="p-4 border rounded-xl ${bg}">
+
+        <div class="flex justify-between">
+
+          <div>
+            <p class="font-semibold text-gray-900">
+              ${sub.domain || "Unknown Domain"}
+            </p>
+
+            <p class="text-xs text-gray-500">
+              ${sub.plan || "No plan"} • ${sub.reference || ""}
+            </p>
+          </div>
+
+          <div class="text-right">
+
+            <p class="text-xs font-bold ${color}">
+              ${(sub.status || "unknown").toUpperCase()}
+            </p>
+
+            <p class="text-xs text-gray-500">
+              ${sub.daysLeft ?? 0} days left
+            </p>
+
+          </div>
+
+        </div>
+
+        <div class="flex justify-between mt-2 text-xs text-gray-500">
+
+          <span>₦${Number(sub.amount || 0).toLocaleString()}</span>
+
+          <span>
+            ${sub.expiresAt
+              ? new Date(sub.expiresAt).toLocaleDateString()
+              : "No expiry"}
+          </span>
+
+        </div>
+
+      </div>
+    `;
+
+  });
+
+}
+
+/* ================= INIT ================= */
+loadSubscriptionsUI();
+  </script>
