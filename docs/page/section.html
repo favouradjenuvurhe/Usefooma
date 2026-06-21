@@ -1,0 +1,197 @@
+<section class="bg-white py-8 md:py-12 px-4 md:px-6">
+
+  <div class="max-w-6xl mx-auto">
+
+    <!-- Search -->
+    <div class="relative">
+
+      <input
+        id="docSearch"
+        type="text"
+        placeholder="Search articles..."
+        class="w-full h-11 md:h-12 rounded-full border-2 border-gray-100 bg-white pl-12 md:pl-14 pr-5 text-sm md:text-base text-gray-700 outline-none transition-all focus:border-[#f85902]"
+      >
+
+      <i data-lucide="search"
+         class="w-4 h-4 text-gray-400 absolute left-4 md:left-5 top-1/2 -translate-y-1/2"></i>
+
+    </div>
+
+    <!-- Categories -->
+    <div class="mt-5 flex flex-wrap gap-2">
+
+      <button class="doc-tab px-4 py-2 rounded-full bg-[#f85902] text-white font-semibold text-sm"
+              data-filter="all">
+        All
+      </button>
+
+      <button class="doc-tab px-4 py-2 rounded-full border border-gray-200 text-gray-600 font-medium text-sm transition"
+              data-filter="plugin">
+        Plugin
+      </button>
+
+      <button class="doc-tab px-4 py-2 rounded-full border border-gray-200 text-gray-600 font-medium text-sm transition"
+              data-filter="license">
+        License
+      </button>
+
+      <button class="doc-tab px-4 py-2 rounded-full border border-gray-200 text-gray-600 font-medium text-sm transition"
+              data-filter="billing">
+        Billing
+      </button>
+
+      <button class="doc-tab px-4 py-2 rounded-full border border-gray-200 text-gray-600 font-medium text-sm transition"
+              data-filter="addons">
+        Add-ons
+      </button>
+
+      <button class="doc-tab px-4 py-2 rounded-full border border-gray-200 text-gray-600 font-medium text-sm transition"
+              data-filter="api">
+        API
+      </button>
+
+    </div>
+
+    <!-- Articles -->
+    <div id="articlesGrid" class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-5">
+
+      <!-- Plugin -->
+      <article class="doc-card group bg-white border-2 border-gray-100 rounded-[32px] p-5 hover:shadow-lg transition-all duration-300"
+               data-category="plugin"
+               data-title="Getting started with VTUmax Pro Plugin">
+
+        <div class="inline-flex items-center px-3 py-1 rounded-full bg-[#fff7f2] border border-[#ffe1cf]">
+          <span class="text-[#f85902] text-xs font-semibold">
+            Plugin
+          </span>
+        </div>
+
+        <h3 class="mt-4 text-xl md:text-2xl font-bold text-black leading-tight">
+          Getting started with Plus Plugin
+        </h3>
+
+        <p class="mt-3 text-gray-500 text-sm md:text-base leading-relaxed">
+          Learn how to install, activate, and configure the plugin on your WordPress site in under 10 minutes.
+        </p>
+
+        <div class="border-t border-gray-100 mt-5 pt-4 flex items-center gap-2 text-sm text-gray-500">
+          <span>5 min read</span>
+          <span>•</span>
+          <span>2,840 views</span>
+        </div>
+
+      </article>
+
+      <!-- License -->
+      <article class="doc-card group bg-white border-2 border-gray-100 rounded-[32px] p-5 hover:shadow-lg transition-all duration-300"
+               data-category="license"
+               data-title="How domain whitelisting works">
+
+        <div class="inline-flex items-center px-3 py-1 rounded-full bg-[#fff7f2] border border-[#ffe1cf]">
+          <span class="text-[#f85902] text-xs font-semibold">
+            License
+          </span>
+        </div>
+
+        <h3 class="mt-4 text-xl md:text-2xl font-bold text-black leading-tight">
+          How domain whitelisting works
+        </h3>
+
+        <p class="mt-3 text-gray-500 text-sm md:text-base leading-relaxed">
+          Understand how your license key validates domains, propagation timing, and how to add or remove slots.
+        </p>
+
+        <div class="border-t border-gray-100 mt-5 pt-4 flex items-center gap-2 text-sm text-gray-500">
+          <span>3 min read</span>
+          <span>•</span>
+          <span>1,920 views</span>
+        </div>
+
+      </article>
+
+      <!-- Billing -->
+      <article class="doc-card group bg-white border-2 border-gray-100 rounded-[32px] p-5 hover:shadow-lg transition-all duration-300"
+               data-category="billing"
+               data-title="Managing subscriptions and renewals">
+
+        <div class="inline-flex items-center px-3 py-1 rounded-full bg-[#fff7f2] border border-[#ffe1cf]">
+          <span class="text-[#f85902] text-xs font-semibold">
+            Billing
+          </span>
+        </div>
+
+        <h3 class="mt-4 text-xl md:text-2xl font-bold text-black leading-tight">
+          Managing subscriptions and renewals
+        </h3>
+
+        <p class="mt-3 text-gray-500 text-sm md:text-base leading-relaxed">
+          Learn how renewals work, update billing details, and manage active subscriptions.
+        </p>
+
+        <div class="border-t border-gray-100 mt-5 pt-4 flex items-center gap-2 text-sm text-gray-500">
+          <span>4 min read</span>
+          <span>•</span>
+          <span>1,450 views</span>
+        </div>
+
+      </article>
+
+      <!-- Add-ons -->
+      <article class="doc-card group bg-white border-2 border-gray-100 rounded-[32px] p-5 hover:shadow-lg transition-all duration-300"
+               data-category="addons"
+               data-title="Installing VTUmax Add-ons">
+
+        <div class="inline-flex items-center px-3 py-1 rounded-full bg-[#fff7f2] border border-[#ffe1cf]">
+          <span class="text-[#f85902] text-xs font-semibold">
+            Add-ons
+          </span>
+        </div>
+
+        <h3 class="mt-4 text-xl md:text-2xl font-bold text-black leading-tight">
+          Installing Plus Plugin Add-ons
+        </h3>
+
+        <p class="mt-3 text-gray-500 text-sm md:text-base leading-relaxed">
+          Extend your installation with premium add-ons and extra modules.
+        </p>
+
+        <div class="border-t border-gray-100 mt-5 pt-4 flex items-center gap-2 text-sm text-gray-500">
+          <span>4 min read</span>
+          <span>•</span>
+          <span>1,760 views</span>
+        </div>
+
+      </article>
+
+      <!-- API -->
+      <article class="doc-card group bg-white border-2 border-gray-100 rounded-[32px] p-5 hover:shadow-lg transition-all duration-300"
+               data-category="api"
+               data-title="API authentication guide">
+
+        <div class="inline-flex items-center px-3 py-1 rounded-full bg-[#fff7f2] border border-[#ffe1cf]">
+          <span class="text-[#f85902] text-xs font-semibold">
+            API
+          </span>
+        </div>
+
+        <h3 class="mt-4 text-xl md:text-2xl font-bold text-black leading-tight">
+          API authentication guide
+        </h3>
+
+        <p class="mt-3 text-gray-500 text-sm md:text-base leading-relaxed">
+          Generate API keys, authenticate requests, and connect your applications securely.
+        </p>
+
+        <div class="border-t border-gray-100 mt-5 pt-4 flex items-center gap-2 text-sm text-gray-500">
+          <span>6 min read</span>
+          <span>•</span>
+          <span>3,100 views</span>
+        </div>
+
+      </article>
+
+    </div>
+
+  </div>
+
+</section>
