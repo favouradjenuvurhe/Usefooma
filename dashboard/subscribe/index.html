@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Subscriptions</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://unpkg.com/lucide@latest"></script>
+
+<style>
+#backdrop {
+  display: none;
+}
+#backdrop.active {
+  display: block;
+}
+</style>
+</head>
+
+<body class="bg-gray-50">
+
+<!-- BACKDROP -->
+<div id="backdrop"
+     class="fixed inset-0 bg-black/40 z-40 md:hidden"
+     onclick="closeMobileSidebar()"></div>
+
+<!-- HEADER -->
+<div id="header"></div>
+
+<div class="flex">
+
+  <!-- SIDEBAR -->
+  <div id="sidebar" class="hidden md:block w-64"></div>
+
+  <main class="flex-1 p-4 md:p-6">
+
+    <!-- SAME DASHBOARD SECTION STYLE -->
+    <div id="subscriptions"></div>
+
+  </main>
+
+</div>
+
+<!-- MOBILE SIDEBAR -->
+<div id="mobile-sidebar"
+     class="fixed top-0 left-0 h-full w-72 bg-white shadow-lg z-50 transform -translate-x-full transition-transform md:hidden">
+</div>
+
+<script type="module">
+
+import { getMySubscriptions } from "/config/Subscribe.js";
+
+/* ================= AUTH ================= */
+const uid = localStorage.getItem("uid");
+
+if (!uid) {
+  window.location.href = "/auth/login";
+}
+
+/* ================= SECTIONS (same system as dashboard) ================= */
+const SECTIONS = [
+  { id: "header", file: "/dashboard/page/header.html" },
+  { id: "sidebar", file: "/dashboard/page/sidebar.html" },
+  { id: "mobile-sidebar", file: "/dashboard/page/mobile-sidebar.html" },
+
+  /* ONLY ONE MAIN SECTION FOR THIS PAGE */
+  { id: "subscriptions", file: "/dashboard/subscribe/subscriptions.html" }
+];
+
+/* ================= LOAD ================= */
+async function loadSection(id, file) {
+
+  try {
+
+    const res = await fetch(file);
+    document.getElementById(id).innerHTML = await res.text();
+    lucide.createIcons();
+
+  } catch (err) {
+    console.error(err);
+  }
+
+}
+
+async function loadAllSections() {
+  for (const s of SECTIONS) {
+    await loadSection(s.id, s.file);
+  }
+}
+
+/* ================= SIDEBAR TOGGLE ================= */
+window.openMobileSidebar = function () {
+
+  document.getElementById("mobile-sidebar")
+    .classList.remove("-translate-x-full");
+
+  document.getElementById("backdrop")
+    .classList.add("active");
+
+};
+
+window.closeMobileSidebar = function () {
+
+  document.getElementById("mobile-sidebar")
+    .classList.add("-translate-x-full");
+
+  document.getElementById("backdrop")
+    .classList.remove("active");
+
+};
+
+/* ================= SUBSCRIPTION DATA ================= */
+async function initSubscriptions() {
+
+  const data = await getMySubscriptions();
+
+  if (!data.success) return;
+
+  const box = document.getElementById("subscriptions");
+
+  if (!box) return;
+
+  box.innerHTML = `
+  
+    <!-- HEADER CARD -->
+    <div class="bg-white rounded-2xl border border-gray-100 p-4 mb-4">
+
+      <h2 class="text-lg font-semibold text-gray-900">
+        My Subscriptions
+      </h2>
+
+      <p class="text-xs text-gray-500 mt-1">
+        Track active, expiring and expired subscriptions
+      </p>
+
+    </div>
+
+    <!-- SUMMARY -->
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-4">
+
+      <div class="bg-white p-3 rounded-xl border">
+        <p class="text-xs text-gray-500">Total</p>
+        <h3 class="font-semibold">${data.summary.total}</h3>
+      </div>
+
+      <div class="bg-green-50 p-3 rounded-xl border border-green-100">
+        <p class="text-xs text-green-600">Active</p>
+        <h3 class="font-semibold text-green-700">${data.summary.active}</h3>
+      </div>
+
+      <div class="bg-yellow-50 p-3 rounded-xl border border-yellow-100">
+        <p class="text-xs text-yellow-600">Expiring</p>
+        <h3 class="font-semibold text-yellow-700">${data.summary.expiring}</h3>
+      </div>
+
+      <div class="bg-red-50 p-3 rounded-xl border border-red-100">
+        <p class="text-xs text-red-600">Expired</p>
+        <h3 class="font-semibold text-red-700">${data.summary.expired}</h3>
+      </div>
+
+    </div>
+
+    <!-- LIST -->
+    <div class="space-y-3">
+
+      ${
+        data.subscriptions.map(sub => {
+
+          let color =
+            sub.status === "active"
+              ? "text-green-600"
+              : sub.status === "expiring"
+              ? "text-yellow-600"
+              : "text-red-600";
+
+          let bg =
+            sub.status === "active"
+              ? "bg-green-50"
+              : sub.status === "expiring"
+              ? "bg-yellow-50"
+              : "bg-red-50";
+
+          return `
+            <div class="p-4 border rounded-xl ${bg}">
+
+              <div class="flex justify-between">
+
+                <div>
+                  <p class="font-semibold text-gray-900">
+                    ${sub.domain}
+                  </p>
+
+                  <p class="text-xs text-gray-500">
+                    ${sub.plan || ""} • ${sub.reference || ""}
+                  </p>
+                </div>
+
+                <div class="text-right">
+
+                  <p class="text-xs font-bold ${color}">
+                    ${sub.status.toUpperCase()}
+                  </p>
+
+                  <p class="text-xs text-gray-500">
+                    ${sub.daysLeft} days left
+                  </p>
+
+                </div>
+
+              </div>
+
+              <div class="flex justify-between mt-2 text-xs text-gray-500">
+                <span>₦${Number(sub.amount || 0).toLocaleString()}</span>
+                <span>${sub.expiresAt ? new Date(sub.expiresAt).toLocaleDateString() : ""}</span>
+              </div>
+
+            </div>
+          `;
+
+        }).join("")
+      }
+
+    </div>
+
+  `;
+
+}
+
+/* ================= INIT ================= */
+await loadAllSections();
+await initSubscriptions();
+
+</script>
+
+</body>
+</html>
