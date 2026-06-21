@@ -1,0 +1,128 @@
+<div class="p-3 h-screen bg-white overflow-y-auto">
+
+    <!-- Dashboard -->
+    <button onclick="router('dashboard')"
+        class="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl bg-[#f85902] text-white font-medium mb-4">
+
+        <i data-lucide="layout-dashboard" class="w-4 h-4"></i>
+        <span>Dashboard</span>
+
+    </button>
+
+    <!-- ADD MONEY -->
+    <div class="mb-4">
+
+        <p class="px-3 mb-2 text-[11px] font-bold uppercase tracking-wide text-gray-400">
+            Add Money
+        </p>
+
+        <button onclick="router('virtual-account')"
+            class="w-full flex items-center gap-3 px-3 py-2 rounded-xl text-gray-700 hover:bg-orange-50 hover:text-[#f85902]">
+
+            <i data-lucide="building-2" class="w-4 h-4"></i>
+            <span>Virtual Account</span>
+
+        </button>
+
+        <button onclick="router('checkout')"
+            class="w-full flex items-center gap-3 px-3 py-2 rounded-xl text-gray-700 hover:bg-orange-50 hover:text-[#f85902]">
+
+            <i data-lucide="credit-card" class="w-4 h-4"></i>
+            <span>Checkout</span>
+
+        </button>
+
+    </div>
+
+    <!-- PRODUCTS -->
+    <div class="mb-4">
+
+        <p class="px-3 mb-2 text-[11px] font-bold uppercase tracking-wide text-gray-400">
+            Products
+        </p>
+
+        <button onclick="router('plugins')"
+            class="w-full flex items-center gap-3 px-3 py-2 rounded-xl text-gray-700 hover:bg-orange-50 hover:text-[#f85902]">
+
+            <i data-lucide="package" class="w-4 h-4"></i>
+            <span>Plugins</span>
+
+        </button>
+
+        <button onclick="router('themes')"
+            class="w-full flex items-center gap-3 px-3 py-2 rounded-xl text-gray-700 hover:bg-orange-50 hover:text-[#f85902]">
+
+            <i data-lucide="palette" class="w-4 h-4"></i>
+            <span>Themes</span>
+
+        </button>
+
+        <button onclick="router('subscriptions')"
+            class="w-full flex items-center gap-3 px-3 py-2 rounded-xl text-gray-700 hover:bg-orange-50 hover:text-[#f85902]">
+
+            <i data-lucide="badge-check" class="w-4 h-4"></i>
+            <span>Subscriptions</span>
+
+        </button>
+
+    </div>
+
+    <!-- ANALYSIS -->
+    <div class="mb-4">
+
+        <p class="px-3 mb-2 text-[11px] font-bold uppercase tracking-wide text-gray-400">
+            Analysis
+        </p>
+
+        <button onclick="router('transactions')"
+            class="w-full flex items-center gap-3 px-3 py-2 rounded-xl text-gray-700 hover:bg-orange-50 hover:text-[#f85902]">
+
+            <i data-lucide="arrow-left-right" class="w-4 h-4"></i>
+            <span>Transactions</span>
+
+        </button>
+
+        <button onclick="router('statistics')"
+            class="w-full flex items-center gap-3 px-3 py-2 rounded-xl text-gray-700 hover:bg-orange-50 hover:text-[#f85902]">
+
+            <i data-lucide="bar-chart-3" class="w-4 h-4"></i>
+            <span>Statistics</span>
+
+        </button>
+
+    </div>
+
+    <!-- OTHERS -->
+    <div>
+
+        <p class="px-3 mb-2 text-[11px] font-bold uppercase tracking-wide text-gray-400">
+            Others
+        </p>
+
+        <button onclick="router('ticket')"
+            class="w-full flex items-center gap-3 px-3 py-2 rounded-xl text-gray-700 hover:bg-orange-50 hover:text-[#f85902]">
+
+            <i data-lucide="life-buoy" class="w-4 h-4"></i>
+            <span>Open Ticket</span>
+
+        </button>
+
+        <button onclick="router('settings')"
+            class="w-full flex items-center gap-3 px-3 py-2 rounded-xl text-gray-700 hover:bg-orange-50 hover:text-[#f85902]">
+
+            <i data-lucide="settings" class="w-4 h-4"></i>
+            <span>Settings</span>
+
+        </button>
+
+        <button onclick="router('logout')"
+            class="w-full flex items-center gap-3 px-3 py-2 rounded-xl text-red-500 hover:bg-red-50">
+
+            <i data-lucide="log-out" class="w-4 h-4"></i>
+            <span>Logout</span>
+
+        </button>
+
+    </div>
+
+</div>
