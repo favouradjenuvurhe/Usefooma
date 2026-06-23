@@ -121,6 +121,18 @@ const sections = [
   { id: "section", file: "/auth/get-started/section.html" }
 ];
 
+/* ================= AUTO REDIRECT IF LOGGED IN ================= */  
+const existingUid = localStorage.getItem("uid");  
+  
+if (  
+  existingUid &&  
+  existingUid !== "null" &&  
+  existingUid !== "undefined" &&  
+  existingUid.trim() !== ""  
+) {  
+  window.location.replace("/dashboard");  
+}  
+
 /* ================= TOAST ================= */
 function showToast(message, type = "error") {
 
