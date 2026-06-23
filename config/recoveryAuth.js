@@ -29,7 +29,7 @@ export async function recoveryAuth(email) {
     return {
       success: true,
       message:
-        "Password reset link has been sent to your email."
+        "Recovery link sent, via email."
     };
 
   } catch (error) {
