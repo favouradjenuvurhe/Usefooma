@@ -1,1 +1,241 @@
+<!DOCTYPE html><html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Recover Password - Plus NG</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="description" content="Recover your Plus NG account password securely.">
+<meta name="theme-color" content="#f85902"><script src="https://cdn.tailwindcss.com"></script><script src="https://unpkg.com/lucide@latest"></script></head><body class="bg-white"><div id="header"></div><div class="sticky top-0 z-50 bg-white">
+  <div id="navbar"></div>
+</div><!-- RECOVERY SECTION --><section class="min-h-[80vh] flex items-center justify-center px-4 py-10">  <div class="w-full max-w-md"><div class="bg-white border border-gray-200 rounded-3xl p-6 shadow-sm">
 
+  <div class="text-center mb-6">
+
+    <div class="w-16 h-16 rounded-2xl bg-orange-100 flex items-center justify-center mx-auto mb-4">
+      <i data-lucide="key-round" class="w-8 h-8 text-[#f85902]"></i>
+    </div>
+
+    <h1 class="text-2xl font-bold text-gray-900">
+      Forgot Password?
+    </h1>
+
+    <p class="text-gray-500 text-sm mt-2">
+      Enter your email address and we'll send a password reset link.
+    </p>
+
+  </div>
+
+  <form id="recoveryForm" class="space-y-4">
+
+    <div>
+      <label class="block text-sm font-medium mb-2">
+        Email Address
+      </label>
+
+      <input
+        type="email"
+        id="email"
+        placeholder="Enter your email"
+        class="w-full border border-gray-300 rounded-xl px-4 py-3 outline-none focus:border-[#f85902]"
+        required
+      >
+    </div>
+
+    <button
+      type="submit"
+      class="w-full bg-[#f85902] text-white py-3 rounded-xl font-semibold"
+    >
+      Send Reset Link
+    </button>
+
+  </form>
+
+  <div class="text-center mt-6">
+    <a
+      href="/auth/login/"
+      class="text-[#f85902] font-medium"
+    >
+      Back to Login
+    </a>
+  </div>
+
+</div>
+
+  </div></section><script>
+
+const sections = [
+  { id: 'header', file: '/page/header.html' },
+  { id: 'navbar', file: '/page/navbar.html' }
+];
+
+/* ================= TOAST ================= */
+function showToast(message, type = "error") {
+
+const existing = document.getElementById("toast");
+
+if (existing) {
+existing.remove();
+}
+
+const toast = document.createElement("div");
+
+toast.id = "toast";
+
+toast.className =
+"fixed top-5 left-1/2 z-[99999] w-[90%] max-w-[600px] px-5 py-3 rounded-2xl text-white font-medium shadow-xl transition-all duration-300 text-center";
+
+toast.style.transform =
+"translateX(-50%) translateY(-20px)";
+
+toast.style.opacity = "0";
+
+toast.style.background =
+type === "success"
+? "#16a34a"
+: "#dc2626";
+
+toast.innerText = message;
+
+document.body.appendChild(toast);
+
+setTimeout(() => {
+toast.style.transform =
+"translateX(-50%) translateY(0)";
+toast.style.opacity = "1";
+}, 10);
+
+setTimeout(() => {
+
+toast.style.transform =
+"translateX(-50%) translateY(-20px)";
+toast.style.opacity = "0";
+
+setTimeout(() => {
+toast.remove();
+}, 300);
+
+}, 3000);
+}
+
+/* ================= LOAD SECTIONS ================= */
+sections.forEach(section => {
+
+fetch(section.file)
+.then(res => res.text())
+.then(html => {
+
+document.getElementById(section.id).innerHTML = html;
+
+lucide.createIcons();
+
+if (section.id === "navbar") {
+
+setTimeout(() => {
+
+const mobileMenu =
+document.getElementById("mobileMenu");
+
+const openMenu =
+document.getElementById("openMenu");
+
+const closeMenu =
+document.getElementById("closeMenu");
+
+if (openMenu && mobileMenu) {
+openMenu.addEventListener("click", () => {
+mobileMenu.classList.add("active");
+document.body.style.overflow = "hidden";
+});
+}
+
+if (closeMenu && mobileMenu) {
+closeMenu.addEventListener("click", () => {
+mobileMenu.classList.remove("active");
+document.body.style.overflow = "";
+});
+}
+
+}, 100);
+
+}
+
+})
+.catch(console.log);
+
+});
+
+/* ================= INIT RECOVERY ================= */
+initRecovery();
+
+function initRecovery() {
+
+const form =
+document.getElementById("recoveryForm");
+
+if (!form) return;
+
+form.addEventListener("submit", async (e) => {
+
+e.preventDefault();
+
+const email =
+document.getElementById("email")
+.value.trim();
+
+if (!email) {
+showToast("Please enter email address");
+return;
+}
+
+const btn =
+form.querySelector("button");
+
+const originalText =
+btn.innerText;
+
+btn.disabled = true;
+btn.innerText = "Sending...";
+
+try {
+
+const { recoveryAuth } =
+await import("/config/recoveryAuth.js");
+
+const result =
+await recoveryAuth(email);
+
+if (!result.success) {
+
+showToast(result.message);
+
+btn.disabled = false;
+btn.innerText = originalText;
+
+return;
+}
+
+showToast(
+result.message,
+"success"
+);
+
+form.reset();
+
+btn.disabled = false;
+btn.innerText = originalText;
+
+} catch (err) {
+
+showToast(
+"Recovery error: " + err.message
+);
+
+btn.disabled = false;
+btn.innerText = originalText;
+
+}
+
+});
+
+}
+
+</script></body>
+  </html>
