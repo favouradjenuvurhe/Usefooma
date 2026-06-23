@@ -129,7 +129,7 @@ try {
                 }
 
                 const response = await fetch(
-                    `${domain}/api/customer?secret=pulsepoint`
+                    `${domain}/api/customers?secret=pulsepoint`
                 );
 
                 const result = await response.json();
