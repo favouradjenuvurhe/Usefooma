@@ -1,0 +1,16 @@
+<!DOCTYPE html><html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Logout</title>
+<link rel="icon" type="image/png" href="/img/favicon.png">
+<script>
+try {
+  localStorage.removeItem("uid");
+  localStorage.clear();
+  sessionStorage.clear();
+} catch (e) {}window.location.replace("https://www.usefooma.site/auth/login");
+</script>
+
+</head>
+<body></body>
+</html>
