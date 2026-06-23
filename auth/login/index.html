@@ -113,7 +113,20 @@
 <div id="footer"></div>
 
 <!-- LOAD SECTIONS -->
-<script>
+    <script>
+/* ================= AUTO REDIRECT ================= */
+const existingUid = localStorage.getItem("uid");
+
+if (
+  existingUid &&
+  existingUid !== "null" &&
+  existingUid !== "undefined" &&
+  existingUid.trim() !== ""
+) {
+  window.location.replace("/dashboard");
+}
+
+/* ================= SECTION LOADER ================= */
 const sections = [
   { id: 'header', file: '/page/header.html' },
   { id: 'navbar', file: '/page/navbar.html' },
@@ -272,6 +285,6 @@ function initLogin() {
   });
 
 }
-      </script>
-</body>
+ </script>
+  </body>
   </html>
