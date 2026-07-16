@@ -1,10 +1,10 @@
 {
   "name": "Usefooma",
   "slug": "pulsepoint",
-  "version": "1.6.5",
+  "version": "1.6.6",
   "author": "Favour Adjenuvurhe",
   "homepage": "https://usefooma.site",
   "download_url": "https://usefooma.site/download/pulsepoint-bill-payment.zip",
-  "description": "Bugs",
-  "new_version": "1.6.5"
+  "description": "Bugs, Email Notifications",
+  "new_version": "1.6.6"
 }
