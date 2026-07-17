@@ -1,10 +1,10 @@
 {
   "name": "Usefooma",
   "slug": "pulsepoint",
-  "version": "1.6.6",
+  "version": "1.6.7",
   "author": "Favour Adjenuvurhe",
   "homepage": "https://usefooma.site",
   "download_url": "https://usefooma.site/download/pulsepoint-bill-payment.zip",
-  "description": "Bugs, Email Notifications",
-  "new_version": "1.6.6"
+  "description": "Vicom airtime fix, woocommerce introduced, shortcode deploy",
+  "new_version": "1.6.7"
 }
