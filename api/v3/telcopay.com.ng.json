@@ -1,0 +1,16 @@
+{
+  "status": true,
+  "domain": "telcopay.com.ng",
+  "email": "admin@telcopay.com.ng",
+  "billing": "monthly",
+  "start_date": "2026-07-21",
+  "expire_date": "2026-08-21",
+  "addons": [
+    "virtualcard",
+    "giftcard"
+  ],
+  "meta": {
+    "version": "v3",
+    "developer": "faav11_"
+  }
+}
