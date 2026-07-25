@@ -1,10 +1,10 @@
 {
   "name": "Usefooma",
   "slug": "pulsepoint",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "author": "Favour Adjenuvurhe",
   "homepage": "https://usefooma.site",
   "download_url": "https://usefooma.site/download/pulsepoint-bill-payment.zip",
-  "description": "New Gen (Usefooma v2)",
-  "new_version": "2.0.0"
+  "description": "Referral, Password and pin fixing",
+  "new_version": "2.0.1"
 }
