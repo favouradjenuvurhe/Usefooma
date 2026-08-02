@@ -7,7 +7,7 @@
   "expire_date": "2026-08-21",
   "addons": [
     "virtualcard",
-    "giftcard"
+    "giftcard",
     "transfer"
   ],
   "meta": {
