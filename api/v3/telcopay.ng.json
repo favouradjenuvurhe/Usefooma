@@ -8,6 +8,7 @@
   "addons": [
     "virtualcard",
     "giftcard"
+    "transfer"
   ],
   "meta": {
     "version": "v3",
