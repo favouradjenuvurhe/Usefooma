@@ -1,10 +1,10 @@
 {
   "name": "Usefooma",
   "slug": "pulsepoint",
-  "version": "2.0.6",
-  "author": "Favour Adjenuvurhe",
+  "version": "2.0.5",
+  "author": "faav11",
   "homepage": "https://usefooma.site",
-  "download_url": "https://usefooma.site/download/pulsepoint-bill-payment.zip",
-  "description": "Dark mode, Support page fix, leaderboard, cards bug fixed, password reset",
-  "new_version": "2.0.6"
+  "download_url": "https://usefooma.site/deployment/download",
+  "description": "Phone number handling, improved notifications, added Betting/Exams/Airtime-to-Cash backends and pages, introduced Airtime-to-Cash admin reviews, and added Betting platform management.",
+  "new_version": "2.0.5"
 }
