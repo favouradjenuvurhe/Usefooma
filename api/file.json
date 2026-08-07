@@ -4,7 +4,7 @@
   "version": "2.0.7",
   "author": "faav11",
   "homepage": "https://usefooma.site",
-  "download_url": "https://usefooma.site/deployment/download",
+  "download_url": "https://usefooma.site/deployment/download/pulsepoint-bill-payment.zip",
   "description": "Improved data plan controls, fixed cashback payouts, removed About Us, hardened auto-updates, improved update error logging, and updated the updater endpoint.",
   "new_version": "2.0.7"
 }
