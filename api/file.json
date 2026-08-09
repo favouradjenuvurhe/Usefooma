@@ -1,10 +1,10 @@
 {
   "name": "Usefooma",
   "slug": "usefooma",
-  "version": "2.1.1",
+  "version": "2.1.2",
   "author": "faav11",
   "homepage": "https://usefooma.site",
-  "download_url": "https://favouradjenuvurhe.github.io/Usefooma/download/pulsepoint-bill-payment-v2.1.1.zip",
+  "download_url": "https://favouradjenuvurhe.github.io/Usefooma/download/pulsepoint-bill-payment-v2.1.2.zip",
   "description": "Fixed the WordPress admin menu icon sizing and reorganized the admin panel into Dashboard, Transactions, Configuration, Customers, and Customization for a cleaner and more structured experience.",
-  "new_version": "2.1.1"
+  "new_version": "2.1.2"
 }
